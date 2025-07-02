@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events - Protocol Club</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons (e.g., hamburger, close, theme toggle) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Reset default styles to ensure consistency */
+        body,
+        h1,
+        h2,
+        h3,
+        p,
+        ul,
+        li {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            font: inherit;
+            vertical-align: baseline;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: #333; /* Default text color for the page content */
+            background-color: #f8f8f8; /* Light background */
+        }
+
+        .events-section h2 {
+    font-weight: 800; /* Makes the font extra bold */
+    /* color: #7a00b8;  (Keeping the existing color) */
+}
+
+        /* --- Global Styles --- */
+        .subheading {
+            font-size: 2.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            text-align: center;
+            color: #7a00b8; /* Purple-ish color */
+        }
+
+        /* --- Header & Navigation Styles --- */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(to left, #211327, #020202); /* Dark gradient */
+            color: white;
+            padding: 12px 5%;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            box-shadow: 0 4px 6px rgba(180, 10, 227, 0.1); /* Subtle shadow */
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: white;
+            gap: 10px;
+        }
+
+        .header-logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid #5a007b;
+            margin-right: 10px;
+        }
+
+        .navbar {
+            display: flex;
+            gap: 20px;
+        }
+
+        .navbar a {
+            color: rgb(212, 173, 237); /* Light purple */
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+            padding: 0.5rem 0;
+            white-space: nowrap;
+        }
+
+        .navbar a:hover,
+        .navbar a.active {
+            color: #3d00b6; /* Darker purple on hover/active */
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0.3rem;
+        }
+
+        .hamburger {
+            display: none; /* Hidden by default on desktop */
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.3rem;
+            margin-right: 15px;
+            order: -1; /* Forces to left of logo on mobile */
+            z-index: 1001;
+        }
+
+        /* --- Sidebar Styles --- */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -100%; /* Changed from right to left */
+            width: 250px;
+            height: 100vh;
+            background: #2a2a2a; /* Darker background to match image */
+            z-index: 1000;
+            transition: left 0.3s ease; /* Transition left property */
+            padding: 1.5rem; /* Adjusted padding to match image */
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2); /* Shadow from right side of sidebar */
+            overflow-y: auto; /* Allows scrolling if content is long */
+            border-radius: 10px; /* Added border-radius to match image */
+        }
+
+        .sidebar.open {
+            left: 0; /* Slides in from left when open */
+        }
+
+        .sidebar-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 0; /* Removed gap, spacing handled by padding/margin on links */
+            margin-top: 3rem;
+        }
+
+        .sidebar-nav a {
+            color: #f0f0f0; /* Off-white text to match image */
+            text-decoration: none;
+            font-size: 1rem;
+            padding: 0.8rem 1.2rem; /* Adjusted padding to match image */
+            border-radius: 8px; /* Rounded corners for menu items */
+            transition: all 0.3s;
+            margin-bottom: 0.5rem; /* Space between menu items */
+        }
+
+        .sidebar-nav a:hover,
+        .sidebar-nav a.active {
+            background: #4a4a4a; /* Darker background on hover/active to match image */
+            color: #9370DB; /* Medium purple text on hover/active to match image */
+        }
+
+        .close-sidebar {
+            position: absolute;
+            top: 1rem;
+            right: 1rem; /* Kept on right within the sidebar */
+            background: none;
+            border: none;
+            color: white; /* White color to match image */
+            font-size: 1.8rem; /* Larger icon to match image */
+            cursor: pointer;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+            z-index: 998; /* Below sidebar but above other content */
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* --- Events Section Styles (from previous context, kept for consistency) --- */
+        .events-section {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 2rem auto;
+            text-align: center;
+        }
+
+        .events-section h2 {
+            font-size: 2.8rem;
+            color: #31033e;
+            margin-bottom: 2rem;
+        }
+
+        .event-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem; /* Increased gap for better spacing */
+            justify-content: center;
+            align-items: stretch; /* Ensure boxes stretch to same height */
+            padding: 1rem 0;
+        }
+
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+            z-index: 998; /* Below sidebar but above other content */
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* --- Events Section Styles --- */
+        .events-section {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 2rem auto;
+            text-align: center;
+        }
+
+        .events-section h2 {
+            font-size: 2.8rem;
+            color: #31033e;
+            margin-bottom: 2rem;
+        }
+
+        .event-container {
+            display: grid;
+            /* Made placeholders a bit smaller */
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem; /* Increased gap for better spacing */
+            justify-content: center;
+            align-items: stretch; /* Ensure boxes stretch to same height */
+            padding: 1rem 0;
+        }
+
+        .event-box {
+            background-color: #515050; /* Subtle black background */
+            border: 3px solid #2c012e; /* Sleek bold neon blue border */
+            border-radius: 12px; /* Slightly more rounded corners */
+            box-shadow: 0 0 15px rgba(70, 4, 73, 0.3), 0 6px 15px rgba(0, 0, 0, 0.2); /* Neon glow effect + softer, larger shadow */
+            padding: 1.8rem; /* More internal padding */
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* Pushes content and date apart */
+            cursor: pointer; /* Indicate clickable */
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            color: #f0f0f0; /* Light text for dark background */
+        }
+
+        .event-box:hover {
+            transform: translateY(-8px); /* More pronounced lift on hover */
+            box-shadow: 0 0 25px rgba(0, 224, 255, 0.6), 0 10px 25px rgba(0, 0, 0, 0.3); /* Stronger neon glow + shadow on hover */
+            border-color: #24b8b8; /* Slightly brighter on hover */
+        }
+
+        .event-image {
+            width: 100%;
+            height: 220px; /* Consistent height for images */
+            object-fit: cover;
+            border-radius: 8px; /* Match box border radius */
+            margin-bottom: 1.2rem; /* More space below image */
+        }
+
+        .event-box h3 {
+            font-size: 1.8rem; /* Larger event titles */
+            color: #00e0ff; /* Neon blue for titles */
+            margin-bottom: 0.8rem;
+            font-weight: 700;
+        }
+
+        .event-box .event-date {
+            font-size: 0.95rem;
+            color: #88eeff; /* Lighter neon blue for date */
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+        }
+
+        .event-box p {
+            font-size: 1rem;
+            color: #d0d0d0; /* Lighter grey for description */
+            line-height: 1.5;
+            margin-bottom: 1.5rem; /* Space before potential buttons */
+            flex-grow: 1; /* Allows description to take available space */
+        }
+
+        /* --- Modal Styles --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85); /* Darker overlay for better focus */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000; /* On top of everything */
+            opacity: 0; /* Start hidden */
+            visibility: hidden; /* Start hidden */
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            position: relative;
+            background-color: #fff;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4); /* Stronger shadow */
+            max-width: 90vw; /* Max width relative to viewport */
+            max-height: 90vh; /* Max height relative to viewport */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transform: scale(0.85); /* Start slightly smaller */
+            transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* Bounce effect */
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1); /* Scale to full size when active */
+        }
+
+        .modal-image-enlarged {
+            max-width: 100%;
+            max-height: 75vh; /* Max height for the image within the modal */
+            display: block;
+            border-radius: 8px; /* Rounded corners for the enlarged image */
+            object-fit: contain; /* Ensures entire image is visible without cropping */
+        }
+
+        .modal-close-button {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 2.2rem; /* Slightly larger close icon */
+            color: #666; /* Softer color */
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .modal-close-button:hover {
+            color: #dc3545; /* Red on hover */
+            transform: scale(1.1);
+        }
+
+        /* --- Footer Styles --- */
+        .footer {
+            width: 100%;
+            background: linear-gradient(to right, #330245, #1f0030); /* Dark gradient */
+            color: white;
+            text-align: center;
+            padding: 2.5rem 1rem; /* More padding */
+            margin-top: 2rem; /* Add some margin from content above */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .footer-container {
+            display: flex;
+            justify-content: space-around; /* Use space-around for distribution */
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 2.5rem; /* More gap */
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 250px; /* Increased min-width for sections */
+            text-align: left; /* Align text left within sections */
+        }
+
+        .footer-section h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.2rem;
+            color: #c5a1e4; /* Light purple heading */
+        }
+
+        .footer-section p {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 0.8rem;
+            color: #e0e0e0;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section ul li {
+            margin: 0.6rem 0;
+        }
+
+        .footer-section ul li a {
+            color: #e0e0e0; /* Lighter link color */
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+
+        .footer-section ul li a:hover {
+            color: #ffffff; /* White on hover */
+            text-decoration: underline;
+        }
+
+        .footer-section .socials {
+            display: flex;
+            gap: 1.2rem;
+            margin-top: 1.5rem;
+            justify-content: flex-start; /* Align social icons to the left */
+        }
+
+        .footer-section .socials img {
+            width: 38px; /* Slightly larger social icons */
+            height: 38px;
+            transition: transform 0.3s ease;
+            object-fit: contain;
+        }
+
+        .footer-section .socials img:hover {
+            transform: scale(1.15);
+        }
+
+        .contact-us h2 { /* Targeting the h2 within contact-us */
+            font-size: 1.3rem;
+            margin-bottom: 1.2rem;
+            color: #c5a1e4;
+            text-align: left; /* Ensure it's left aligned */
+        }
+
+        .contact-us .email,
+        .contact-us p {
+            text-align: left; /* Align contact details left */
+            font-size: 0.95rem;
+            color: #e0e0e0;
+            line-height: 1.7;
+        }
+
+        .contact-us .email {
+            display: flex;
+            align-items: center;
+            gap: 8px; /* Space between icon and text */
+            margin-bottom: 0.5rem;
+        }
+
+        .icon {
+            width: 18px; /* Slightly larger icon */
+            height: 18px;
+            vertical-align: middle;
+        }
+
+        .footer-bottom {
+            margin-top: 3rem; /* More space before copyright */
+            font-size: 0.85rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.25); /* Stronger separator */
+            padding-top: 1.5rem;
+            color: #bbbbbb;
+            width: 100%; /* Ensure separator spans full width */
+        }
+
+        /* --- Responsive Adjustments --- */
+        @media (max-width: 1024px) {
+            .navbar {
+                display: none;
+            }
+            .hamburger {
+                display: block;
+            }
+            .events-section h2 {
+                font-size: 2.2rem;
+            }
+            .event-container {
+                grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); /* Adjusted minmax for smaller boxes */
+                gap: 2rem;
+            }
+            .event-box h3 {
+                font-size: 1.5rem;
+            }
+            .event-image {
+                height: 180px;
+            }
+            .event-box p {
+                font-size: 0.95rem;
+            }
+            .footer-section {
+                min-width: 45%; /* Two columns for footer on tablets */
+            }
+            .footer-container {
+                justify-content: space-around;
+                gap: 2rem;
+            }
+            .footer-section h3, .contact-us h2 {
+                font-size: 1.2rem;
+                text-align: center; /* Center headings */
+            }
+            .footer-section p, .footer-section ul, .contact-us p, .contact-us .email {
+                text-align: center; /* Center text/lists */
+                padding-left: 0;
+            }
+            .footer-section .socials {
+                justify-content: center; /* Center social icons */
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 10px 3%;
+            }
+            .logo {
+                font-size: 1.1rem;
+            }
+            .header-logo {
+                width: 35px;
+                height: 35px;
+            }
+            .events-section {
+                padding: 1.5rem;
+            }
+            .events-section h2 {
+                font-size: 2rem;
+            }
+            .event-container {
+                grid-template-columns: 1fr; /* Single column on mobile */
+                gap: 1.5rem;
+            }
+            .event-box {
+                padding: 1.5rem;
+            }
+            .event-box h3 {
+                font-size: 1.4rem;
+            }
+            .event-image {
+                height: 160px;
+            }
+            .event-box .event-date {
+                font-size: 0.9rem;
+            }
+            .event-box p {
+                font-size: 0.9rem;
+            }
+            .footer-section {
+                min-width: 100%; /* Stack footer sections vertically */
+                text-align: center;
+            }
+            .footer-section .socials {
+                justify-content: center;
+            }
+             .footer-section h3, .contact-us h2 {
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .sidebar {
+                width: 80%;
+            }
+            .logo {
+                font-size: 1rem;
+            }
+            .header-logo {
+                width: 30px;
+                height: 30px;
+            }
+            .hamburger {
+                font-size: 1.3rem;
+            }
+            .events-section {
+                padding: 1rem;
+            }
+            .events-section h2 {
+                font-size: 1.8rem;
+            }
+            .event-box {
+                padding: 1rem;
+            }
+            .event-box h3 {
+                font-size: 1.2rem;
+            }
+            .event-image {
+                height: 140px;
+            }
+            .event-box .event-date {
+                font-size: 0.85rem;
+            }
+            .event-box p {
+                font-size: 0.85rem;
+            }
+             .footer-section h3, .contact-us h2 {
+                font-size: 1rem;
+            }
+        }
+        .footer {
+    background-color: #0c0c2c; /* Deep navy color */
+    color: #fff;
+    padding: 2rem 1rem;
+    text-align: center;
+    margin-top: 0; /* Ensures no extra space above from previous elements */
+    display: flex; /* Added for flex column on smaller screens */
+    flex-direction: column; /* Added for flex column on smaller screens */
+    align-items: center; /* Added for flex column on smaller screens */
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap; /* Allows sections to wrap to the next line */
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%; /* Ensure container takes full width up to max-width */
+}
+
+.footer-section {
+    flex: 1; /* Allows sections to grow and shrink */
+    min-width: 200px; /* Minimum width before wrapping */
+    text-align: left; /* Default text alignment */
+}
+
+.footer-section h3 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: #c5a1e4; /* Added specific color for consistency */
+}
+
+.footer-section p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: #e0e0e0; /* Added specific color for consistency */
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-section ul li {
+    margin: 0.5rem 0;
+}
+
+.footer-section ul li a {
+    color: #c5a1e4; /* Subtle lavender color for links */
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+}
+
+.footer-section ul li a:hover {
+    color: #ffffff; /* White on hover */
+}
+
+.footer-section .socials {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+    justify-content: center; /* Center social icons within their section */
+    align-items: center;
+}
+
+.footer-section .socials img {
+    width: 48px;
+    height: 35px;
+    transition: transform 0.3s;
+    object-fit: contain; /* Ensures the entire image fits */
+}
+
+.footer-section .socials img:hover {
+    transform: scale(1.2);
+}
+
+.footer-bottom {
+    margin-top: 2rem;
+    font-size: 0.8rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    padding-top: 1rem;
+    width: 100%; /* Ensure the border spans full width */
+    color: #bbbbbb; /* Adjusted color for copyright text */
+}
+
+.icon {
+    width: 40px;
+    height: 30px;
+    margin-right: 0.5rem;
+    vertical-align: middle;
+    /* justify-content: center; - This isn't valid CSS for 'icon' directly, used in flex parent */
+    object-fit: contain; /* Ensures icon fits well */
+}
+
+.footer-logo {
+    width: 15px; /* Adjust logo size */
+    height: 15px;
+    border-radius: 50%;
+    border: 3px solid #3b0051;
+    /* justify-content: center; - This isn't valid CSS for 'footer-logo' directly */
+    object-fit: cover; /* Ensures image covers area */
+}
+
+/* --- Responsive Adjustments --- */
+
+/* For tablets and smaller desktops (e.g., 1024px to 768px) */
+@media (max-width: 1024px) {
+    .footer-container {
+        gap: 1.5rem;
+    }
+    .footer-section {
+        flex: 1 1 calc(50% - 1.5rem); /* Two columns per row, accounting for gap */
+        min-width: unset; /* Remove min-width to allow calculation to take over */
+    }
+    .footer-section h3,
+    .footer-section p,
+    .footer-section ul,
+    .footer-section .socials {
+        text-align: center; /* Center align text/items within sections */
+        justify-content: center; /* Center social icons */
+    }
+}
+
+/* For mobile devices (e.g., up to 767px) */
+@media (max-width: 767px) {
+    .footer {
+        padding: 1.5rem 0.8rem; /* Reduce padding */
+    }
+    .footer-container {
+        flex-direction: column; /* Stack sections vertically */
+        gap: 1.5rem; /* Space between stacked sections */
+        align-items: center; /* Center items when stacked */
+    }
+    .footer-section {
+        width: 100%; /* Take full width */
+        max-width: 300px; /* Optional: limit max width for readability on very wide phones */
+        text-align: center; /* Center align all content in stacked sections */
+    }
+    .footer-section h3 {
+        font-size: 1.1rem; /* Slightly smaller headings */
+        margin-bottom: 0.8rem;
+    }
+    .footer-section p,
+    .footer-section ul li a {
+        font-size: 0.85rem; /* Smaller text */
+    }
+    .footer-section .socials img {
+        width: 40px; /* Slightly smaller social icons */
+        height: 30px;
+    }
+    .icon {
+        width: 30px; /* Smaller icon */
+        height: 25px;
+    }
+    .footer-bottom {
+        margin-top: 1.5rem;
+        padding-top: 0.8rem;
+        font-size: 0.75rem; /* Smaller copyright text */
+    }
+}
+
+
+/* Specific adjustment for the contact section, assuming 'contact-us' is a class you might use within a footer-section for contact details */
+.contact-us p,
+.contact-us .email {
+    text-align: left; /* Keep contact details left-aligned if they are in their own section */
+    display: flex; /* Apply flex to align icon and text */
+    align-items: center;
+    justify-content: center; /* Center the contact line itself */
+}
+
+/* Override for mobile if contact-us is part of a footer-section that gets centered */
+@media (max-width: 767px) {
+    .contact-us p,
+    .contact-us .email {
+        justify-content: center; /* Center align text/icon group */
+    }
+}
+    </style>
+</head>
+<body>
+    <header class="header">
+         <button id="hamburger" class="hamburger"><i class="fas fa-bars"></i></button>
+        <div class="header-left">
+            <div class="logo">Protocol <img src="logos/proto.png" alt="Protocol Club Logo" class="header-logo"></div>
+        </div>
+        <nav id="navbar" class="navbar">
+            <a href="index.html">Home</a>
+            <a href="about.html">About Us</a>
+            <a href="events.html" class="active">Events</a>
+            <a href="articles.html">Articles</a>
+            <a href="gallery.html">Gallery</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+        <div class="header-right">
+            <!-- <button id="hamburger" class="hamburger"><i class="fas fa-bars"></i></button> -->
+            <button id="theme-toggle" class="theme-toggle">🌓</button>
+        </div>
+    </header>
+
+    <aside id="sidebar" class="sidebar">
+        <nav class="sidebar-nav">
+            <a href="index.html">Home</a>
+            <a href="about.html">About Us</a>
+            <a href="events.html">Events</a>
+            <a href="articles.html">Articles</a>
+            <a href="gallery.html">Gallery</a>
+            <a href="contact.html">Contact</a>
+            <button id="close-sidebar" class="close-sidebar"><i class="fas fa-times"></i></button>
+        </nav>
+    </aside>
+    <div class="overlay" id="overlay"></div>
+
+    <main>
+        <section class="events-section">
+            <h2>Our Events</h2>
+            <div class="event-container">
+                <!-- Existing Events -->
+                <div class="event-box">
+                    <img src="events/codeblitz.jpg" alt="Climb and Slide Event" class="event-image">
+                    <h3>CodeBlitz 2.0</h3>
+                    <p class="event-date"><strong>Date:</strong> 8th April 2025</p>
+                    <p>An intense codeathon where logic met adrenaline, with rapid-fire problem solving and high-speed coding showdowns.</p>
+                </div>
+
+                <div class="event-box">
+                    <img src="events/amongus.jpg" alt="Among Us - IRL Event" class="event-image">
+                    <h3>Among Us - IRL</h3>
+                    <p class="event-date"><strong>Date:</strong> 10 & 11 April 2025</p>
+                    <p>A chaotic and hilarious live-action version of the classic game, filled with sneaky imposters and thrilling reveals.</p>
+                </div>
+
+                <div class="event-box">
+                    <img src="events/UIUX.png" alt="Coding Challenge" class="event-image">
+                    <h3>UI/UX Workshop</h3>
+                    <p class="event-date"><strong>Date:</strong> 13th March 2025</p>
+                    <p>A creative jam where design thinking, wireframing, and sleek prototypes came together in one hands-on sprint.</p>
+                </div>
+
+                <div class="event-box">
+                    <img src="events/leapcode.jpg" alt="LeapCode" class="event-image">
+                    <h3>LeapCode</h3>
+                    <p>A four-week deep dive into DSA concepts—packed with guided tutorials, real-time problem solving, and steady skill building.</p>
+                </div>
+                
+                <div class="event-box">
+                    <img src="events/ccq.jpg" alt="The Ciphered Coordinates Quest" class="event-image">
+                    <h3>The Ciphered Coordinates Quest</h3>
+                    <p class="event-date"><strong>Date:</strong> 9th July 2024</p>
+                    <p>A cryptic campus treasure hunt with riddles, twists, and brainy teamwork that kept hearts racing.</p>
+                </div>
+                <div class="event-box">
+                    <img src="events/matrix.jpg" alt="MergerVerse" class="event-image">
+                    <h3>The Matrix</h3>
+                    <p class="event-date"><strong>Date:</strong>9th December 2023</p>
+                    <p>A thrilling mission of codes, puzzles, and choices that pulled everyone deep into a simulated mystery world</p>
+                </div>
+                <div class="event-box">
+                    <img src="events/cod.jpg" alt="COD (Call of Duty)" class="event-image">
+                    <h3>COD (Call of Duty)</h3>
+                    <p class="event-date"><strong>Date:</strong> 7th April 2025</p>
+                    <p>A high-energy gaming face-off where every match was intense, strategic, and packed with epic wins.</p>
+                </div>
+
+                <div class="event-box">
+                    <img src="events/climb.jpg" alt="Tech Talk" class="event-image">
+                    <h3>Climb & Slide</h3>
+                    <p class="event-date"><strong>Date:</strong> 9th May 2025</p>
+                    <p>A life-size game board experience where luck, trivia, and wild turns made every move unpredictable fun.</p>
+                </div>
+
+                <div class="event-box">
+                    <img src="events/cloud.jpg" alt="Gaming Tournament" class="event-image">
+                    <h3>Cloud Connect</h3>
+                    <p class="event-date"><strong>Date:</strong> 15th December 2023</p>
+                    <p>A smart dive into cloud tech that bridged skills with industry insights, unlocking the future of computing.</p>
+                </div>
+
+                <div class="event-box">
+                    <img src="events/flutter.jpg" alt="Hackathon" class="event-image">
+                    <h3>Flutter Workshop</h3>
+                    <p class="event-date"><strong>Date:</strong> 8th June 2023</p>
+                    <p>A fast-paced, hands-on mobile dev workshop that brought beautiful apps to life with Flutter power.</p>
+                </div>
+
+                <!-- New Events -->
+                <div class="event-box">
+                    <img src="events/green.jpg" alt="Flutter Workshop" class="event-image">
+                    <h3>Greentech Innovate</h3>
+                    <p class="event-date"><strong>Date:</strong> 21st June 2024</p>
+                    <p>An eco-driven ideathon with smart farming tech, fresh thinking, and a whole lot of green innovation.</p>
+                </div>
+
+                <div class="event-box">
+                    <img src="events/image.jpg" alt="Cryptic Killer" class="event-image">
+                    <h3>The World Of Pixels</h3>
+                    <p class="event-date"><strong>Date:</strong> 6th May 2024</p>
+                    <p>A vibrant, hands-on intro to image processing where pixels turned into art through code and creativity.</p>
+                </div>
+                
+                
+            </div>
+        </section>
+    </main>
+
+    <!-- The Modal for Enlarged Image -->
+    <div id="imageModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close-button" id="closeModal"><i class="fas fa-times"></i></button>
+            <img src="" alt="Enlarged Event Image" class="modal-image-enlarged" id="enlargedImage">
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Protocol Club</h3>
+                <p>Official computer science club of BMS College of Engineering, Bengaluru. Join us in our journey of innovation and learning.</p>
+                <div class="socials">
+                    <a href="https://www.linkedin.com/company/protocol-bmsce/"><img src="logos/linkedinlogo.png" alt="LinkedIn"></a>
+                    <a href="https://www.instagram.com/protocol-bmsce/"><img src="logos/instalogo.png" alt="Instagram"></a>
+                    <a href="mailto:protocol.cse@bmsce.ac.in"><img src="logos/maillogo.png" alt="Gmail"></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="events.html">Events</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="articles.html">Articles</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p><img src="logos/maillogo.png" alt="Gmail" class="icon"> protocol.cse@bmsce.ac.in</p>
+                <p>B M S College of Engineering<br>Bull Temple Road, Basavanagudi<br>Bengaluru - 560019</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            © 2025 Protocol Club. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // --- Element Selectors ---
+            const body = document.body;
+            const hamburger = document.getElementById('hamburger');
+            const sidebar = document.getElementById('sidebar');
+            const closeSidebar = document.getElementById('close-sidebar');
+            const overlay = document.getElementById('overlay');
+            const navLinks = document.querySelectorAll('.sidebar-nav a, .navbar a'); // Select all nav links
+
+            // --- Sidebar / Overlay Logic ---
+            function toggleSidebar() {
+                if (sidebar && overlay) {
+                    sidebar.classList.toggle('open');
+                    overlay.classList.toggle('active');
+                }
+            }
+
+            if (hamburger) hamburger.addEventListener('click', toggleSidebar);
+            if (closeSidebar) closeSidebar.addEventListener('click', toggleSidebar);
+            if (overlay) overlay.addEventListener('click', toggleSidebar);
+
+            // Close sidebar when a navigation link is clicked
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    if (sidebar.classList.contains('open')) {
+                        toggleSidebar();
+                    }
+                });
+            });
+
+            // --- Theme Toggle Logic (Placeholder) ---
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            if (themeToggleBtn) {
+                themeToggleBtn.addEventListener('click', function() {
+                    body.classList.toggle('dark');
+                    // You might want to save the user's preference in localStorage
+                    // if (body.classList.contains('dark')) {
+                    //     localStorage.setItem('theme', 'dark');
+                    // } else {
+                    //     localStorage.setItem('theme', 'light');
+                    // }
+                });
+                // Apply saved theme on load (if using localStorage)
+                // if (localStorage.getItem('theme') === 'dark') {
+                //     body.classList.add('dark');
+                // } else {
+                //     body.classList.remove('dark');
+                // }
+            }
+
+            // --- Image Modal Logic for Event Images ---
+            const eventImages = document.querySelectorAll('.event-image');
+            const imageModal = document.getElementById('imageModal');
+            const enlargedImage = document.getElementById('enlargedImage');
+            const closeModalBtn = document.getElementById('closeModal');
+
+            eventImages.forEach(image => {
+                image.addEventListener('click', function() {
+                    if (enlargedImage && imageModal) {
+                        enlargedImage.src = this.src; // Set enlarged image source
+                        imageModal.classList.add('active'); // Show the modal
+                    }
+                });
+            });
+
+            if (closeModalBtn) {
+                closeModalBtn.addEventListener('click', function() {
+                    if (imageModal) {
+                        imageModal.classList.remove('active'); // Hide the modal
+                    }
+                });
+            }
+
+            if (imageModal) {
+                imageModal.addEventListener('click', function(event) {
+                    // Close modal if clicking directly on the overlay, not on the content
+                    if (event.target === imageModal) {
+                        imageModal.classList.remove('active');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
