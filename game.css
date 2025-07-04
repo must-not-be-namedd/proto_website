@@ -1,0 +1,279 @@
+ body {
+    background-color: black;
+    margin: 0;
+    overflow: hidden;
+    color: white;
+  font-family: 'Orbitron', sans-serif;
+  
+}
+
+  
+
+  #game-board {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #question-box {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 20px;
+    background: rgba(0,0,0,0.7);
+    padding: 10px 20px;
+    border: 1px solid white;
+    border-radius: 8px;
+  }
+
+  #asteroid {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+
+  .asteroid {
+  position: absolute;
+  
+  color: rgb(144, 142, 142);
+  font-size: 20px;
+  font-weight: 700;
+  text-align: center;
+  padding: 10px;
+  width: fit-content;
+  max-width: 150px;
+  word-wrap: break-word;
+  
+  /* Irregular rounded shape */
+  border-radius: 40% 60% 55% 45% / 50% 40% 60% 50%;
+  
+  /* 3D-like shading */
+ 
+  
+  /* Slight rotation randomized in JS */
+  transform: rotate(0deg);
+}
+
+
+  #bullet {
+    position: absolute;
+    background-color: orange;
+    width: 0.5vw;
+    height: 4vh;
+    border-top-right-radius: 0.25vw;
+    border-top-left-radius: 0.25vw;
+    left: 0;
+    top: 70%;
+    display: none;
+  }
+
+  #ship {
+    transform: rotate(-45deg);
+    position: absolute;
+    left: 0;
+    top: 70%;
+    font-size: 60px;
+    transition: left 0.1s;
+    user-select: none;
+  }
+
+  #score {
+    position: fixed;
+    top: 10px;
+    right: 20px;
+    color: white;
+    font-size: 20px;
+  }
+
+  #stars-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -1; /* behind your ship and asteroids */
+}
+
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+ opacity:0.8;
+}
+
+ #Homebutton{
+  position: fixed;
+  top: 10px;
+  left: 20px;
+  color: white;
+  text-decoration: none;
+  font-size: 20px;
+  background-color: rgba(0,0,0,0.7);
+  padding: 10px 20px;
+  border-radius: 8px;
+  z-index: 9999;
+
+} 
+
+#Homebutton:hover {
+  background-color: rgba(255,255,255,0.2);
+  color: white;
+}
+
+#ship {
+    position: absolute; /* Essential for dynamic positioning via JavaScript */
+    /* Add any other positioning properties for #ship if your game.js
+       expects them, e.g., initial `bottom`, `left` */
+    /* If #ship itself defines the size, remove width/height from img */
+    /* Example: width: 80px; height: 80px; overflow: hidden; */
+}
+
+#ship img {
+    display: block; /* Removes any extra space below the image */
+    width: 100%;    /* Makes the GIF fill the #ship container */
+    height: auto;   /* Maintains the GIF's aspect ratio */
+    /* If you want the image to have a fixed size regardless of #ship,
+       you can set explicit `width` and `height` here, e.g.:
+       width: 70px;
+       height: 70px;
+    */
+}
+/* ... (your existing CSS for #game-board, #question-box, #bullet, #ship, #ship img, #score, .star, etc.) ... */
+
+#asteroid {
+    /* This might be your asteroid container, ensure it allows absolute positioning */
+    position: relative; /* Or absolute, depending on its parent */
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Allows clicks to pass through if it's just a container */
+}
+
+.asteroid {
+    position: absolute;
+    /* Adjust width and height to fit your rock.gif.
+       These dimensions will define the area of your clickable asteroid. */
+    width: 120px; /* Example size for the asteroid container */
+    height: 120px; /* Example size for the asteroid container */
+    display: flex; /* Use flexbox to easily center content */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    overflow: hidden; /* Hide anything that goes outside the asteroid bounds */
+    text-align: center; /* Center text if it wraps */
+    
+    /* Consider adding a pointer-events: auto; if your original asteroid was clickable */
+    /* background-color: transparent; Remove any background color from the original static asteroid */
+}
+
+.asteroid-image {
+    position: absolute; /* Position the image relative to the .asteroid div */
+    width: 100%; /* Make the GIF fill the asteroid container */
+    height: 100%; /* Make the GIF fill the asteroid container */
+    object-fit: contain; /* Ensure the entire GIF is visible without cropping, maintaining aspect ratio */
+    /* If your GIF has transparent background and you want the text overlaid, z-index might be needed */
+    z-index: 1; /* Ensure image is behind text if text is also positioned absolutely */
+}
+
+.asteroid-text {
+    position: relative; /* Or absolute, depends on desired layout. Relative is usually safer. */
+    z-index: 2; /* Make sure text appears on top of the GIF */
+    color: white; /* Or any color that stands out on your rock.gif */
+    font-family: 'Orbitron', sans-serif; /* Use your game's font */
+    font-size: 14px; /* Adjust font size to fit inside the rock */
+    padding: 5px; /* Add some padding around the text */
+    text-shadow: 1px 1px 2px black; /* Helps text stand out */
+    word-wrap: break-word; /* Ensures long words break to fit */
+    max-width: 90%; /* Prevent text from spilling too far outside */
+    box-sizing: border-box; /* Include padding in width calculation */
+}
+.asteroid {
+    position: absolute;
+    /* Increase these dimensions to be larger than your rock.gif's inherent size,
+       or at least large enough so the GIF's border doesn't show */
+    width: 150px; /* Increased from 120px */
+    height: 150px; /* Increased from 120px */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Important to hide any overflow if the GIF is larger than the div */
+    text-align: center;
+    /* You might also remove any default border or background from .asteroid if present */
+    border: none; /* Ensure no border on the container itself */
+    background-color: transparent; /* Ensure no background that might show through */
+}
+
+.asteroid-image {
+    position: absolute;
+    /* Make the GIF slightly larger than the container, then use object-fit to scale */
+    width: 105%; /* Make it slightly larger than 100% of the container */
+    height: 105%; /* Make it slightly larger than 100% of the container */
+    object-fit: cover; /* This is key: it will make the GIF fill the entire space, cropping if necessary */
+    /* If 'cover' crops too much, you can try:
+       object-fit: fill; // Stretches to fill (might distort)
+       object-fit: contain; // Scales down to fit, might leave gaps if aspect ratios mismatch
+       A combination of slightly larger width/height on .asteroid-image and object-fit: cover
+       often works best to hide edges.
+    */
+    z-index: 1;
+}
+
+.asteroid-text {
+    position: relative;
+    z-index: 2;
+    color: white; /* Or any color that stands out on your rock.gif */
+    font-family: 'Orbitron', sans-serif;
+    font-size: 14px; /* Adjust as needed */
+    padding: 5px;
+    text-shadow: 1px 1px 2px black, -1px -1px 2px black; /* Enhanced shadow for visibility */
+    word-wrap: break-word;
+    max-width: 90%;
+    box-sizing: border-box;
+}
+.asteroid {
+    position: absolute;
+    /* Reduced size for the asteroid container */
+    width: 100px; /* Adjust as needed */
+    height: 100px; /* Adjust as needed */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    text-align: center;
+    border: none;
+    background-color: transparent; /* Ensure no background on the container */
+}
+
+.asteroid-image {
+    position: absolute;
+    /* Make the GIF slightly larger than the container to ensure no edges show.
+       Using a transparent GIF removes the background. */
+    width: 110%; /* Slightly larger to prevent edges from showing */
+    height: 110%; /* Slightly larger to prevent edges from showing */
+    object-fit: contain; /* Use 'contain' to ensure the entire rock GIF is visible and fits within the div.
+                           If your 'rock.gif' already has a transparent background, 'contain' is better than 'cover'
+                           as it won't crop parts of the actual rock image. */
+    z-index: 1;
+    /* To remove the background, ensure your 'rock.gif' file itself has a transparent background.
+       CSS alone cannot make a non-transparent image transparent. */
+}
+
+.asteroid-text {
+    position: relative; /* Keep text relative to its parent .asteroid */
+    z-index: 2; /* Ensure text is above the GIF */
+    color: rgb(251, 251, 249); /* Choose a color that contrasts well with your transparent rock GIF */
+    font-family: 'Orbitron', sans-serif;
+    font-size: 10px; /* Reduced font size to fit smaller asteroid. Adjust as needed. */
+    padding: 5px; /* Maintain some padding */
+    text-shadow: 1px 1px 2px black, -1px -1px 2px black, 2px 2px 3px rgba(0,0,0,0.5); /* Enhanced shadow for visibility */
+    word-wrap: break-word;
+    max-width: 100%; /* Ensure text stays within the asteroid's width */
+    box-sizing: border-box;
+    font-size: 12px; /* Adjusted font size for better readability */
+    /* Optional: Add a subtle background to the text for better contrast if the rock is too busy */
+    /* background-color: rgba(0, 0, 0, 0.4); */
+    /* border-radius: 3px; */
+}
