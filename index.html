@@ -55,8 +55,6 @@
     justify-content: center;
     align-items: center;
 
-    /* REMOVE THIS LINE if it exists and you want overflow */
-    /* overflow: hidden; */
 
     /* Ensure it reduces slightly and doesn't touch screen borders */
     max-width: 80vw;
@@ -108,9 +106,6 @@
     }
 }
 
-/* Optional: Add padding to the hero-logo-area or hero-container
-   to ensure the logo (and other hero content) has space from the screen edges
-   especially on smaller viewports. */
 .hero-container {
     padding: 20px; /* Add padding around the content within the hero section */
     box-sizing: border-box; /* Ensures padding is included in the element's total width/height */
@@ -137,6 +132,35 @@
         padding: 15px; /* Reduce padding slightly on very small screens if content is too cramped */
     }
 }
+.social-icons {
+    margin-top: 15px;
+}
+
+.social-icons a {
+    display: inline-block;
+    margin: 0 10px;
+    color: #fff;
+    font-size: 30px; /* Adjust icon size as needed */
+    text-decoration: none;
+    transition: transform 0.3s ease;
+}
+
+.social-icons a:hover {
+    transform: translateY(-3px);
+}
+.footer-section .socials img {
+    width: 38px;
+    height: 27px;
+    transition: transform 0.3s;
+    text-align: center;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+  }
     </style>
 </head>
 <body class="dark">
@@ -155,6 +179,8 @@
             <a href="articles.html">Articles</a>
             <a href="gallery.html">Gallery</a>
             <a href="contact.html">Contact</a>
+            <a href="game.html">CLICK HERE</a>
+          
         </nav>
         <div class="header-right">
             <button id="theme-toggle" class="theme-toggle">🌓</button>
@@ -170,6 +196,7 @@
             <a href="articles.html">Articles</a>
             <a href="gallery.html">Gallery</a>
             <a href="contact.html">Contact</a>
+            <a href="game.html">CLICK HERE</a>
         </nav>
     </aside>
 
@@ -210,7 +237,7 @@
                 <p>Official computer science club of BMS College of Engineering, Bengaluru. Join us in our journey of innovation and learning.</p>
                 <div class="socials">
                     <a href="https://www.linkedin.com/company/protocol-bmsce/"><img src="logos/linkedinlogo.png" alt="LinkedIn"></a>
-                    <a href="https://www.instagram.com/protocol-bmsce/"><img src="logos/instalogo.png" alt="Instagram"></a>
+                    <a href="https://www.instagram.com/protocol_bmsce?igsh=MTBjcmpzMWtxeW9ncQ=="><img src="logos/instalogo.png" alt="Instagram"></a>
                     <a href="mailto:protocol.cse@bmsce.ac.in"><img src="logos/maillogo.png" alt="Gmail"></a>
                 </div>
             </div>
