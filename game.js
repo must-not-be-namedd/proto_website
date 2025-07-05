@@ -19,156 +19,137 @@ let hasAnsweredCurrentQuestion = false;
 let asteroidSpawnIntervalId;
 
 const questions = [
-  // Synthetic Memory & AI
+  // General CS Knowledge & Fun Facts (Google, Instagram, Social Media) - START
   {
-    question: "What experiment in 2013 marked a major step toward synthetic memory?",
-    options: ["False memory in a mouse using optogenetics", "Brain transplant in humans", "AI learning language"],
-    answer: "False memory in a mouse using optogenetics"
-  },
-  {
-    question: "Which technology allows specific neurons to be activated using light?",
-    options: ["Neuralink chips", "Optogenetics", "Virtual Reality"],
-    answer: "Optogenetics"
-  },
-  {
-    question: "Which organization achieved a 35% improvement in memory recall for veterans with brain injuries?",
-    options: ["WHO", "DARPA", "MIT"],
-    answer: "DARPA"
-  },
-  {
-    question: "What neural network type enables AI to learn from sequences and recall information?",
-    options: ["Feedforward Networks", "Recurrent Neural Networks (RNNs)", "Support Vector Machines"],
-    answer: "Recurrent Neural Networks (RNNs)"
-  },
-  {
-    question: "What key ethical concern arises from editable memories?",
-    options: ["Cost of memory chips", "Loss of identity and trust in self", "Data storage limits"],
-    answer: "Loss of identity and trust in self"
-  },
-  {
-    question: "Which AI memory system combines neural networks with external memory for reasoning tasks?",
-    options: ["Decision Trees", "Differentiable Neural Computers (DNCs)", "Simple Linear Models"],
-    answer: "Differentiable Neural Computers (DNCs)"
-  },
-  {
-    question: "In a 2023 Pew survey, what percentage of people expressed discomfort with implanted memories?",
-    options: ["25%", "63%", "90%"],
-    answer: "63%"
-  },
-
-  // Quantum Computing & Encryption
-  {
-    question: "What encryption method secures most internet communications today?",
-    options: ["AES-128", "RSA-2048", "SHA-256"],
-    answer: "RSA-2048"
-  },
-  {
-    question: "Why is RSA-2048 considered secure for classical computers?",
-    options: ["AI monitors the system", "Factoring large primes is extremely difficult", "It uses unbreakable passwords"],
-    answer: "Factoring large primes is extremely difficult"
-  },
-  {
-    question: "What quantum property allows computers to exist in multiple states simultaneously?",
-    options: ["Entanglement", "Superposition", "Binary switching"],
-    answer: "Superposition"
-  },
-  {
-    question: "Which thought experiment illustrates superposition?",
-    options: ["Maxwell's Demon", "Schrödinger's Cat", "Heisenberg's Microscope"],
-    answer: "Schrödinger's Cat"
-  },
-  {
-    question: "Quantum entanglement means changing one qubit affects:",
-    options: ["The entire system", "Its entangled partner instantly", "The processor speed"],
-    answer: "Its entangled partner instantly"
-  },
-  {
-    question: "Which algorithm threatens current encryption by efficiently factoring large numbers?",
-    options: ["RSA Algorithm", "Shor's Algorithm", "Quantum Fourier Algorithm"],
-    answer: "Shor's Algorithm"
-  },
-  {
-    question: "What is the estimated chance of a quantum computer breaking RSA-2048 by 2034?",
-    options: ["5% to 10%", "17% to 34%", "75% to 90%"],
-    answer: "17% to 34%"
-  },
-  {
-    question: "Which company demonstrated quantum error correction with the Willow chip?",
-    options: ["Microsoft", "Google", "IBM"],
+    question: "Which iconic tech company, known for its search engine, was originally named 'BackRub' before its current, more recognizable name?",
+    options: ["Microsoft", "Yahoo", "Google"],
     answer: "Google"
   },
   {
-    question: "The 'harvest now, decrypt later' strategy involves:",
-    options: ["Immediate password cracking", "Storing encrypted data to decrypt later with quantum computers", "Using AI to harvest crops"],
-    answer: "Storing encrypted data to decrypt later with quantum computers"
+    question: "What major online platform, originally conceived as a dating site, transformed into the world's most popular video-sharing website?",
+    options: ["TikTok", "Vimeo", "YouTube"],
+    answer: "YouTube"
   },
   {
-    question: "Quantum cryptography ensures unbreakable security by using:",
-    options: ["Complex passwords", "The uncertainty principle and no-cloning theorem", "Supercomputers"],
-    answer: "The uncertainty principle and no-cloning theorem"
+    question: "Which popular social media app, primarily focused on photo and video sharing, was acquired by Facebook for approximately $1 billion in 2012?",
+    options: ["Snapchat", "TikTok", "Instagram"],
+    answer: "Instagram"
+  },
+  {
+    question: "What was the initial name of the famous social networking platform that launched in 2004, designed for college students?",
+    options: ["Twitter", "MySpace", "Thefacebook"],
+    answer: "Thefacebook"
+  },
+  {
+    question: "What term is used for unwanted and unsolicited electronic messages, often sent in bulk, notoriously known as 'junk mail'?",
+    options: ["Phishing", "Spam", "Malware"],
+    answer: "Spam"
+  },
+  {
+    question: "Which social media platform is known for its short, text-based posts originally limited to 140 characters, now often called 'X'?",
+    options: ["Facebook", "LinkedIn", "Twitter"],
+    answer: "Twitter"
+  },
+  {
+    question: "Before it became a massive video platform, what was YouTube's original idea when it was founded in 2005?",
+    options: ["An online dating service", "A photo-sharing site", "An e-commerce marketplace"],
+    answer: "An online dating service"
+  },
+  {
+    question: "What concept describes delivering computing services (like servers, storage, and software) over the internet, rather than running them locally?",
+    options: ["Local Computing", "Cloud Computing", "Peer-to-Peer Computing"],
+    answer: "Cloud Computing"
   },
 
-  // Quantum Communication for Military Security
+  // Security & Networking Essentials
   {
-    question: "What does Quantum Key Distribution (QKD) use to generate secure encryption keys?",
-    options: ["Magnetic fields", "Quantum bits (qubits)", "AI algorithms"],
-    answer: "Quantum bits (qubits)"
+    question: "What network security system monitors and filters network traffic, acting as a barrier to protect computers from unauthorized access?",
+    options: ["Antivirus Software", "Firewall", "VPN"],
+    answer: "Firewall"
   },
   {
-    question: "Which property of qubits enables more complex and secure encoding?",
-    options: ["Binary logic", "Superposition", "High voltage"],
-    answer: "Superposition"
+    question: "What process transforms readable information into an unreadable format to secure it from unauthorized viewing?",
+    options: ["Compression", "Encryption", "Hashing"],
+    answer: "Encryption"
   },
   {
-    question: "What effect does intercepting a quantum transmission have?",
-    options: ["Slows the system", "Leaves no trace", "Disturbs the system, alerting parties"],
-    answer: "Disturbs the system, alerting parties"
+    question: "What small data file is stored by a website on your browser to remember information about you, like login status or preferences?",
+    options: ["Cache", "Cookie", "Log File"],
+    answer: "Cookie"
   },
   {
-    question: "The BB84 protocol secures communication by sending:",
-    options: ["Sound waves", "Photons with random polarizations", "Encrypted emails"],
-    answer: "Photons with random polarizations"
+    question: "What deceptive online tactic attempts to trick users into revealing sensitive information, often through fake emails or websites?",
+    options: ["Hacking", "Phishing", "Spamming"],
+    answer: "Phishing"
   },
   {
-    question: "Quantum communication between distant nodes often uses:",
-    options: ["Traditional copper wires", "Free-space optical links and satellites", "Magnetic resonance"],
-    answer: "Free-space optical links and satellites"
+    question: "What type of computer network connects devices over a relatively small area, suchs as a single home, office, or school?",
+    options: ["Wide Area Network (WAN)", "Local Area Network (LAN)", "Metropolitan Area Network (MAN)"],
+    answer: "Local Area Network (LAN)"
+  },
+
+  // Core Concepts & Foundations (Moved to End)
+  {
+    question: "What primary function does RAM perform in a computer, often described as its 'short-term memory'?",
+    options: ["Permanent Storage", "Temporary Data Access", "Graphics Processing"],
+    answer: "Temporary Data Access"
   },
   {
-    question: "Which satellite first demonstrated successful long-distance quantum communication?",
-    options: ["Boeing Q4S", "Micius", "EuroQCI"],
-    answer: "Micius"
+    question: "Which programming language, known for its clear syntax, is widely used for web development, data analysis, and automation?",
+    options: ["Java", "C++", "Python"],
+    answer: "Python"
   },
   {
-    question: "What challenge limits QKD over fiber optic cables without repeaters?",
-    options: ["Weather interference", "Distance limitations of 100-200 km", "Insufficient data speeds"],
-    answer: "Distance limitations of 100-200 km"
+    question: "What is the systematic process of finding and fixing errors in computer code?",
+    options: ["Compiling", "Debugging", "Executing"],
+    answer: "Debugging"
   },
   {
-    question: "Quantum mesh networks enhance military communication by enabling:",
-    options: ["Open public Wi-Fi", "Secure, real-time links between satellites, ships and field units", "Faster mobile internet"],
-    answer: "Secure, real-time links between satellites, ships and field units"
+    question: "What fundamental web technology gives webpages their interactivity and dynamic behavior, like clickable buttons and animations?",
+    options: ["HTML", "CSS", "JavaScript"],
+    answer: "JavaScript"
   },
   {
-    question: "Why are quantum networks considered superior for military security?",
-    options: ["They use stronger passwords", "They offer information-theoretic security based on physics", "They rely on advanced firewalls"],
-    answer: "They offer information-theoretic security based on physics"
+    question: "What unique address identifies a webpage or resource on the internet, typically starting with 'http://' or 'https://'?",
+    options: ["IP Address", "URL", "MAC Address"],
+    answer: "URL"
   },
   {
-    question: "What is a major global project aiming for continent-wide quantum-secure communications?",
-    options: ["Project Starlink", "EuroQCI", "Quantum Fiber USA"],
-    answer: "EuroQCI"
+    question: "What type of storage allows a computer to store data permanently, even when the power is turned off, like photos on your phone?",
+    options: ["Volatile Memory", "Solid State Drive (SSD)", "Cache Memory"],
+    answer: "Solid State Drive (SSD)"
   },
   {
-    question: "Besides QKD, what other approach is being explored to resist quantum attacks?",
-    options: ["Post-quantum cryptography", "Blockchain security", "AI-based password protection"],
-    answer: "Post-quantum cryptography"
+    question: "What is the most basic unit of information in computing, represented as either a 0 or a 1?",
+    options: ["Byte", "Bit", "Kilobyte"],
+    answer: "Bit"
+  },
+  {
+    question: "What specialized computer component is primarily responsible for generating images and visuals for your screen, especially for gaming and video?",
+    options: ["Motherboard", "Graphics Processing Unit (GPU)", "Power Supply Unit (PSU)"],
+    answer: "Graphics Processing Unit (GPU)"
+  },
+  {
+    question: "What is a step-by-step set of instructions that a computer follows to solve a problem or perform a task?",
+    options: ["Syntax", "Algorithm", "Variable"],
+    answer: "Algorithm"
+  },
+  {
+    question: "What software manages a computer's hardware and software resources, allowing other programs to run?",
+    options: ["Application Software", "Operating System", "Utility Software"],
+    answer: "Operating System"
   }
 ];
 
+// Array to keep track of asteroid positions to prevent overlap
+const activeAsteroidPositions = [];
+// IMPORTANT: Ensure these match the actual width/height of your .asteroid in CSS
+const ASTEROID_WIDTH = 100;
+const ASTEROID_HEIGHT = 100;
+
+
 window.addEventListener("load", () => {
   loadNewQuestion();
-  // We will manage asteroid spawning within loadNewQuestion and moveAsteroids
   setInterval(moveAsteroids, 50);
   spawnInitialStars(100);
 });
@@ -192,7 +173,6 @@ function loadNewQuestion() {
   hasAnsweredCurrentQuestion = false;
   questionCount++;
 
-  // Clear any existing asteroid spawning interval
   if (asteroidSpawnIntervalId) {
     clearInterval(asteroidSpawnIntervalId);
   }
@@ -202,17 +182,17 @@ function loadNewQuestion() {
     return;
   }
 
-  // Clear existing asteroids before loading new question's options
   const allAsteroids = asteroidContainer.querySelectorAll(".asteroid");
   allAsteroids.forEach(a => a.remove());
 
+  // Clear active asteroid positions for the new question
+  activeAsteroidPositions.length = 0;
+
   currentQuestion = questions[Math.floor(Math.random() * questions.length)];
   questionBox.textContent = "Question: " + currentQuestion.question;
-  currentOptions = [...currentQuestion.options]; // Reset currentOptions for the new question
+  currentOptions = [...currentQuestion.options];
 
-  // NEW: Start spawning asteroids for the new question
   let optionsSpawned = 0;
-  // Spawn the first asteroid immediately, then others at an interval
   if (currentOptions.length > 0) {
     spawnAsteroidOption(); // Spawn first one
     optionsSpawned++;
@@ -222,10 +202,9 @@ function loadNewQuestion() {
         spawnAsteroidOption();
         optionsSpawned++;
       } else {
-        // All options for the current question have been spawned
         clearInterval(asteroidSpawnIntervalId);
       }
-    }, 1000); // Spawn subsequent options every 1 second
+    }, 1000);
   }
 }
 
@@ -236,13 +215,12 @@ function endGame() {
   window.removeEventListener("click", fire);
   window.removeEventListener("keydown", handleKeyDownForFire);
 
-  // Clear any active asteroid spawning interval at game end
   if (asteroidSpawnIntervalId) {
     clearInterval(asteroidSpawnIntervalId);
   }
+  activeAsteroidPositions.length = 0; // Clear positions at game end
 }
 
-// Separate function for keydown event to allow removal
 function handleKeyDownForFire(e) {
   if (e.key === "ArrowLeft") ship_left -= move_inter;
   if (e.key === "ArrowRight") ship_left += move_inter;
@@ -250,7 +228,7 @@ function handleKeyDownForFire(e) {
   ship.style.left = ship_left + "px";
 }
 
-window.addEventListener("keydown", handleKeyDownForFire); // Use the named function
+window.addEventListener("keydown", handleKeyDownForFire);
 
 function fire() {
   const ship_loc = ship.getBoundingClientRect();
@@ -262,7 +240,8 @@ function fire() {
   bullet.style.display = "block";
   bullet_top = nozzleY;
 
-  const bulletSpeed = 40; // Reduced bullet speed to make it more manageable with asteroid speed
+  // Reduced bullet speed from 4000 to 150 for better hit detection and visibility
+  const bulletSpeed = 150;
 
   const tid = setInterval(() => {
     bullet_top -= bulletSpeed;
@@ -272,11 +251,12 @@ function fire() {
     for (const at of asteroids) {
       if (isCollapsed(bullet, at)) {
         showExplosion(at);
-        // Remove all asteroids once one is hit, whether it's correct or not
         const allAsteroids = asteroidContainer.querySelectorAll(".asteroid");
         allAsteroids.forEach(a => a.remove());
 
-        // Get the text from the asteroid's child span element
+        // Clear active asteroid positions after a hit
+        activeAsteroidPositions.length = 0;
+
         const text = at.querySelector(".asteroid-text")?.textContent.trim();
         if (text && text.toLowerCase() === currentQuestion.answer.toLowerCase()) {
           score++;
@@ -288,7 +268,7 @@ function fire() {
         clearInterval(tid);
         bullet.style.display = "none";
         loadNewQuestion();
-        return; // Exit the forEach loop after handling the collision
+        return;
       }
     }
 
@@ -310,71 +290,126 @@ function isCollapsed(obj1, obj2) {
   );
 }
 
-// Renamed for clarity: This function now specifically spawns *one* option
+// Function to check for overlap with existing asteroids
+function checkOverlap(newRect) {
+    for (let i = 0; i < activeAsteroidPositions.length; i++) {
+        const existingRect = activeAsteroidPositions[i];
+        // Check for overlap on x-axis and y-axis
+        if (newRect.left < existingRect.left + existingRect.width &&
+            newRect.left + newRect.width > existingRect.left &&
+            newRect.top < existingRect.top + existingRect.height &&
+            newRect.top + newRect.height > existingRect.top) {
+            return true; // Overlap detected
+        }
+    }
+    return false; // No overlap
+}
+
+
 function spawnAsteroidOption() {
   if (currentOptions.length > 0 && !hasAnsweredCurrentQuestion) {
-    const opt = currentOptions.shift(); // Get the next option
+    const opt = currentOptions.shift();
     const at = document.createElement("div");
     at.classList.add("asteroid");
 
-    // Create and append the image element
     const img = document.createElement("img");
-    img.src = "rock1.gif"; // Make sure this path is correct relative to your HTML
+    img.src = "rock1.gif"; // Ensure this path is correct
     img.alt = "Asteroid";
-    img.classList.add("asteroid-image"); // Add a class for potential styling of the image
+    img.classList.add("asteroid-image");
 
-    // Create and append the text element
     const text = document.createElement("span");
-    text.classList.add("asteroid-text"); // Add a class for potential styling of the text
+    text.classList.add("asteroid-text");
     text.textContent = opt;
 
     at.appendChild(img);
     at.appendChild(text);
 
-    at.style.left = Math.random() * (window.innerWidth - 100) + "px";
-    at.style.top = "0px";
+    // Try to find a non-overlapping position
+    let newLeft;
+    let attempts = 0;
+    const maxAttempts = 50; // Prevent infinite loop
+
+    // Start slightly above the screen to ensure they fully drop down
+    const startTop = -ASTEROID_HEIGHT; // Asteroids start off-screen at the top
+
+    do {
+        newLeft = Math.random() * (window.innerWidth - ASTEROID_WIDTH);
+        var testRect = {
+            left: newLeft,
+            top: startTop,
+            width: ASTEROID_WIDTH,
+            height: ASTEROID_HEIGHT
+        };
+        attempts++;
+    } while (checkOverlap(testRect) && attempts < maxAttempts);
+
+    if (attempts === maxAttempts) {
+        console.warn("Could not find a non-overlapping position for asteroid. Spawning might overlap.");
+    }
+
+    at.style.left = `${newLeft}px`;
+    at.style.top = `${startTop}px`;
 
     asteroidContainer.appendChild(at);
+
+    // Store the position of the newly spawned asteroid for overlap checking
+    activeAsteroidPositions.push({
+        left: newLeft,
+        top: startTop, // Store initial top, moveAsteroids will update actual DOM top
+        width: ASTEROID_WIDTH,
+        height: ASTEROID_HEIGHT,
+        element: at // Store reference to the element to update its position in activeAsteroidPositions
+    });
   }
 }
 
 function moveAsteroids() {
   const asteroids = asteroidContainer.querySelectorAll(".asteroid");
 
-  asteroids.forEach((at) => {
+  for (let i = 0; i < asteroids.length; i++) {
+    const at = asteroids[i];
     let top = parseInt(at.style.top) || 0;
     top += 3; // Asteroid drop speed
     at.style.top = top + "px";
 
+    // Update the stored position for overlap checks
+    if (activeAsteroidPositions[i] && activeAsteroidPositions[i].element === at) {
+      activeAsteroidPositions[i].top = top;
+    }
+
+
     if (top > window.innerHeight) {
       at.remove();
+      // Remove asteroid's position from the active list when it goes off-screen
+      // We need to re-index or remove by element reference
+      // The for loop means we need to adjust index after splice
+      activeAsteroidPositions.splice(i, 1);
+      i--; // Decrement i to account for the removed element
     }
-  });
+  }
 
-  // Check if all *active* asteroids for the current question have disappeared
-  // and all options have been spawned, and the question hasn't been answered by a hit
   if (asteroidContainer.querySelectorAll(".asteroid").length === 0 &&
-      currentOptions.length === 0 && // Ensure all options have been pulled from the array
+      currentOptions.length === 0 &&
       !hasAnsweredCurrentQuestion) {
-    hasAnsweredCurrentQuestion = true; // Mark as answered
+    hasAnsweredCurrentQuestion = true;
     loadNewQuestion();
   }
 }
 
 function showExplosion(at) {
   const rect = at.getBoundingClientRect();
-
   const explosion = document.createElement("img");
-  explosion.src = "explod.gif"; // Make sure this path is correct relative to your HTML
+  // Ensure the path to explod.gif is correct
+  explosion.src = "explod.gif"; // Or '../images/explod.gif' or whatever your path is
   explosion.style.width = "50px";
   explosion.style.position = "absolute";
   explosion.style.left = rect.left + "px";
   explosion.style.top = rect.top + "px";
+  // Add z-index to ensure explosion is on top of other elements
+  explosion.style.zIndex = "1000";
   document.body.appendChild(explosion);
 
-  setTimeout(() => {
-    explosion.remove();
-  }, 500);
+  setTimeout(() => explosion.remove(), 500);
 }
 
 const starsContainer = document.getElementById("stars-container");
@@ -388,10 +423,7 @@ function spawnStar() {
   const size = Math.random() * 2 + 1;
   star.style.width = size + "px";
   star.style.height = size + "px";
-
-
   star.dataset.speed = Math.random() * 3 + 1;
-
   starsContainer.appendChild(star);
 }
 
@@ -402,10 +434,7 @@ function moveStars() {
     let speed = parseFloat(star.dataset.speed);
     top += speed;
     star.style.top = top + "px";
-
-    if (top > window.innerHeight) {
-      star.remove();
-    }
+    if (top > window.innerHeight) star.remove();
   });
 }
 
@@ -419,10 +448,7 @@ function spawnInitialStars(count) {
     const size = Math.random() * 2 + 1;
     star.style.width = size + "px";
     star.style.height = size + "px";
-
-
     star.dataset.speed = Math.random() * 3 + 1;
-
     starsContainer.appendChild(star);
   }
 }
