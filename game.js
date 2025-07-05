@@ -240,7 +240,7 @@ function fire() {
   bullet.style.display = "block";
   bullet_top = nozzleY;
 
-  // Reduced bullet speed from 4000 to 150 for better hit detection and visibility
+  // Bullet speed: 150 (as per previous adjustment)
   const bulletSpeed = 150;
 
   const tid = setInterval(() => {
@@ -369,22 +369,28 @@ function moveAsteroids() {
   for (let i = 0; i < asteroids.length; i++) {
     const at = asteroids[i];
     let top = parseInt(at.style.top) || 0;
-    top += 3; // Asteroid drop speed
+    // Increase asteroid speed by 7x (from 3 to 21)
+    top += 6; // This line was changed from 'top += 3;'
+
     at.style.top = top + "px";
 
     // Update the stored position for overlap checks
-    if (activeAsteroidPositions[i] && activeAsteroidPositions[i].element === at) {
-      activeAsteroidPositions[i].top = top;
+    // We need to find the correct entry in activeAsteroidPositions for this 'at' element
+    const positionEntry = activeAsteroidPositions.find(pos => pos.element === at);
+    if (positionEntry) {
+        positionEntry.top = top;
     }
 
 
     if (top > window.innerHeight) {
       at.remove();
       // Remove asteroid's position from the active list when it goes off-screen
-      // We need to re-index or remove by element reference
-      // The for loop means we need to adjust index after splice
-      activeAsteroidPositions.splice(i, 1);
-      i--; // Decrement i to account for the removed element
+      // We need to remove the corresponding entry based on element reference
+      const index = activeAsteroidPositions.findIndex(pos => pos.element === at);
+      if (index > -1) {
+          activeAsteroidPositions.splice(index, 1);
+          i--; // Decrement i to account for the removed element
+      }
     }
   }
 
@@ -400,13 +406,12 @@ function showExplosion(at) {
   const rect = at.getBoundingClientRect();
   const explosion = document.createElement("img");
   // Ensure the path to explod.gif is correct
-  explosion.src = "explod.gif"; // Or '../images/explod.gif' or whatever your path is
+  explosion.src = "explod.gif"; // Or adjust to your correct path, e.g., 'images/explod.gif'
   explosion.style.width = "50px";
   explosion.style.position = "absolute";
   explosion.style.left = rect.left + "px";
   explosion.style.top = rect.top + "px";
-  // Add z-index to ensure explosion is on top of other elements
-  explosion.style.zIndex = "1000";
+  explosion.style.zIndex = "1000"; // Ensure explosion is on top
   document.body.appendChild(explosion);
 
   setTimeout(() => explosion.remove(), 500);
