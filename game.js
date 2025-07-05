@@ -15,6 +15,9 @@ let currentQuestion = {};
 let currentOptions = [];
 let hasAnsweredCurrentQuestion = false;
 
+// Store the asteroid spawning interval ID
+let asteroidSpawnIntervalId;
+
 const questions = [
   // Synthetic Memory & AI
   {
@@ -165,7 +168,7 @@ const questions = [
 
 window.addEventListener("load", () => {
   loadNewQuestion();
-  setInterval(spawnAsteroids, 2000);
+  // We will manage asteroid spawning within loadNewQuestion and moveAsteroids
   setInterval(moveAsteroids, 50);
   spawnInitialStars(100);
 });
@@ -188,6 +191,12 @@ window.addEventListener("touchmove", (e) => {
 function loadNewQuestion() {
   hasAnsweredCurrentQuestion = false;
   questionCount++;
+
+  // Clear any existing asteroid spawning interval
+  if (asteroidSpawnIntervalId) {
+    clearInterval(asteroidSpawnIntervalId);
+  }
+
   if (questionCount > maxQuestions) {
     endGame();
     return;
@@ -200,6 +209,24 @@ function loadNewQuestion() {
   currentQuestion = questions[Math.floor(Math.random() * questions.length)];
   questionBox.textContent = "Question: " + currentQuestion.question;
   currentOptions = [...currentQuestion.options]; // Reset currentOptions for the new question
+
+  // NEW: Start spawning asteroids for the new question
+  let optionsSpawned = 0;
+  // Spawn the first asteroid immediately, then others at an interval
+  if (currentOptions.length > 0) {
+    spawnAsteroidOption(); // Spawn first one
+    optionsSpawned++;
+
+    asteroidSpawnIntervalId = setInterval(() => {
+      if (optionsSpawned < currentQuestion.options.length) {
+        spawnAsteroidOption();
+        optionsSpawned++;
+      } else {
+        // All options for the current question have been spawned
+        clearInterval(asteroidSpawnIntervalId);
+      }
+    }, 1000); // Spawn subsequent options every 1 second
+  }
 }
 
 function endGame() {
@@ -207,8 +234,12 @@ function endGame() {
   const allAsteroids = asteroidContainer.querySelectorAll(".asteroid");
   allAsteroids.forEach(a => a.remove());
   window.removeEventListener("click", fire);
-  // Optionally remove keydown listener for firing too
   window.removeEventListener("keydown", handleKeyDownForFire);
+
+  // Clear any active asteroid spawning interval at game end
+  if (asteroidSpawnIntervalId) {
+    clearInterval(asteroidSpawnIntervalId);
+  }
 }
 
 // Separate function for keydown event to allow removal
@@ -279,17 +310,16 @@ function isCollapsed(obj1, obj2) {
   );
 }
 
-function spawnAsteroids() {
-  // Only spawn if there are options left for the current question
-  // and the question hasn't been answered yet (to prevent spawning after a hit)
+// Renamed for clarity: This function now specifically spawns *one* option
+function spawnAsteroidOption() {
   if (currentOptions.length > 0 && !hasAnsweredCurrentQuestion) {
-    const opt = currentOptions.shift(); // Use shift to get the first element and remove it
+    const opt = currentOptions.shift(); // Get the next option
     const at = document.createElement("div");
     at.classList.add("asteroid");
 
     // Create and append the image element
     const img = document.createElement("img");
-    img.src = "rock1.gif"; // Make sure this path is correct
+    img.src = "rock1.gif"; // Make sure this path is correct relative to your HTML
     img.alt = "Asteroid";
     img.classList.add("asteroid-image"); // Add a class for potential styling of the image
 
@@ -313,7 +343,7 @@ function moveAsteroids() {
 
   asteroids.forEach((at) => {
     let top = parseInt(at.style.top) || 0;
-    top += 3; // Reduced asteroid speed back to original for better playability
+    top += 3; // Asteroid drop speed
     at.style.top = top + "px";
 
     if (top > window.innerHeight) {
@@ -321,12 +351,12 @@ function moveAsteroids() {
     }
   });
 
-  // Check if all asteroids for the current question have disappeared and the question hasn't been answered
+  // Check if all *active* asteroids for the current question have disappeared
+  // and all options have been spawned, and the question hasn't been answered by a hit
   if (asteroidContainer.querySelectorAll(".asteroid").length === 0 &&
-    currentOptions.length === 0 && !hasAnsweredCurrentQuestion) {
-    // This means all options have fallen off screen without being shot.
-    // Consider this a "missed" question.
-    hasAnsweredCurrentQuestion = true; // Mark as answered to prevent re-triggering
+      currentOptions.length === 0 && // Ensure all options have been pulled from the array
+      !hasAnsweredCurrentQuestion) {
+    hasAnsweredCurrentQuestion = true; // Mark as answered
     loadNewQuestion();
   }
 }
@@ -335,7 +365,7 @@ function showExplosion(at) {
   const rect = at.getBoundingClientRect();
 
   const explosion = document.createElement("img");
-  explosion.src = "explod.gif"; // Make sure this path is correct
+  explosion.src = "explod.gif"; // Make sure this path is correct relative to your HTML
   explosion.style.width = "50px";
   explosion.style.position = "absolute";
   explosion.style.left = rect.left + "px";
