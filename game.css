@@ -277,3 +277,10 @@
     /* background-color: rgba(0, 0, 0, 0.4); */
     /* border-radius: 3px; */
 }
+.asteroid {
+    /* ... existing styles ... */
+    width: 100px; /* Make sure this matches ASTEROID_WIDTH */
+    height: 100px; /* Make sure this matches ASTEROID_HEIGHT */
+    /* You might want to add overflow: hidden; to prevent text/image from spilling */
+    overflow: hidden;
+}

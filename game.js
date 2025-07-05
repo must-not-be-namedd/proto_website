@@ -140,16 +140,19 @@ const questions = [
   }
 ];
 
+let availableQuestions = []; // Pool of questions for the current game session
+
 const activeAsteroidPositions = [];
-const ASTEROID_WIDTH = 100; // IMPORTANT: Match your CSS width
-const ASTEROID_HEIGHT = 100; // IMPORTANT: Match your CSS height
+const ASTEROID_WIDTH = 100;
+const ASTEROID_HEIGHT = 100;
 
-// Store used X positions for current set of asteroids to prevent horizontal overlap
-let usedXPositions = new Set();
+let usedXPositions = new Set(); // To prevent horizontal overlap for asteroids in the current question set
 
+// Constant for asteroid falling speed
+const ASTEROID_FALL_SPEED = 8; // This maintains the 7x speed
 
 window.addEventListener("load", () => {
-  loadNewQuestion();
+  initializeGame();
   setInterval(moveAsteroids, 50);
   spawnInitialStars(100);
 });
@@ -169,6 +172,16 @@ window.addEventListener("touchmove", (e) => {
   ship.style.left = ship_left + "px";
 });
 
+function initializeGame() {
+  score = 0;
+  questionCount = 0;
+  scoreDisplay.textContent = "Score: " + score;
+  // Populate availableQuestions with all questions and shuffle them
+  availableQuestions = [...allQuestions];
+  shuffleArray(availableQuestions);
+  loadNewQuestion();
+}
+
 function loadNewQuestion() {
   hasAnsweredCurrentQuestion = false;
   questionCount++;
@@ -177,7 +190,7 @@ function loadNewQuestion() {
     clearInterval(asteroidSpawnIntervalId);
   }
 
-  if (questionCount > maxQuestions) {
+  if (questionCount > maxQuestions || availableQuestions.length === 0) {
     endGame();
     return;
   }
@@ -185,16 +198,17 @@ function loadNewQuestion() {
   const allAsteroids = asteroidContainer.querySelectorAll(".asteroid");
   allAsteroids.forEach(a => a.remove());
 
-  activeAsteroidPositions.length = 0; // Clear all active positions
-  usedXPositions.clear(); // Clear used X positions for the new question
+  activeAsteroidPositions.length = 0;
+  usedXPositions.clear();
 
-  currentQuestion = questions[Math.floor(Math.random() * questions.length)];
+  // Get a question from the shuffled availableQuestions array
+  currentQuestion = availableQuestions.shift(); // Remove the first question from the array
   questionBox.textContent = "Question: " + currentQuestion.question;
-  currentOptions = [...currentQuestion.options];
+  currentOptions = [...currentQuestion.options]; // Copy options as they will be shifted out
 
   let optionsSpawned = 0;
   if (currentOptions.length > 0) {
-    spawnAsteroidOption(); // Spawn first one
+    spawnAsteroidOption();
     optionsSpawned++;
 
     asteroidSpawnIntervalId = setInterval(() => {
@@ -255,7 +269,7 @@ function fire() {
         allAsteroids.forEach(a => a.remove());
 
         activeAsteroidPositions.length = 0;
-        usedXPositions.clear(); // Clear used X positions after a hit
+        usedXPositions.clear();
 
         const text = at.querySelector(".asteroid-text")?.textContent.trim();
         if (text && text.toLowerCase() === currentQuestion.answer.toLowerCase()) {
@@ -290,13 +304,11 @@ function isCollapsed(obj1, obj2) {
   );
 }
 
-// Function to check for overlap with existing asteroids (including newly defined usedXPositions)
 function checkOverlap(newRect) {
     // Check overlap with currently falling asteroids (vertical overlap is allowed to some extent)
     for (let i = 0; i < activeAsteroidPositions.length; i++) {
         const existingRect = activeAsteroidPositions[i];
         // Only check horizontal overlap for existing active asteroids if they are close vertically
-        // This helps prevent "bunching" but allows some diagonal paths
         const verticalThreshold = ASTEROID_HEIGHT * 0.5; // If asteroids are within half their height vertically
         if (newRect.left < existingRect.left + existingRect.width &&
             newRect.left + newRect.width > existingRect.left &&
@@ -307,7 +319,7 @@ function checkOverlap(newRect) {
 
     // Check for overlap with previously used *initial* X positions for this question's set of asteroids
     // This is to prevent new asteroids from spawning on the exact same vertical "line"
-    const horizontalTolerance = ASTEROID_WIDTH * 0.5; // Allow some slight horizontal variance
+    const horizontalTolerance = ASTEROID_WIDTH * 0.5;
     for (let x of usedXPositions) {
         if (Math.abs(newRect.left - x) < horizontalTolerance) {
             return true; // Too close to a previously used X position
@@ -324,7 +336,7 @@ function spawnAsteroidOption() {
     at.classList.add("asteroid");
 
     const img = document.createElement("img");
-    img.src = "rock1.gif";
+    img.src = "rock1.gif"; // Ensure this path is correct
     img.alt = "Asteroid";
     img.classList.add("asteroid-image");
 
@@ -337,7 +349,7 @@ function spawnAsteroidOption() {
 
     let newLeft;
     let attempts = 0;
-    const maxAttempts = 100; // Increased attempts for better spacing
+    const maxAttempts = 100;
 
     const startTop = -ASTEROID_HEIGHT;
 
@@ -368,38 +380,30 @@ function spawnAsteroidOption() {
         height: ASTEROID_HEIGHT,
         element: at
     });
-    usedXPositions.add(newLeft); // Add the chosen initial X position to the set
+    usedXPositions.add(newLeft);
   }
 }
 
 function moveAsteroids() {
-  const asteroids = asteroidContainer.querySelectorAll(".asteroid");
+  // Use a traditional for loop when modifying the array being iterated over
+  for (let i = 0; i < activeAsteroidPositions.length; i++) {
+    const positionEntry = activeAsteroidPositions[i]; // Get the entry from our tracking array
+    const at = positionEntry.element; // Get the actual DOM element
 
-  for (let i = 0; i < asteroids.length; i++) {
-    const at = asteroids[i];
     let top = parseInt(at.style.top) || 0;
-    top += 7; // Asteroid drop speed (7x original speed)
+    top += ASTEROID_FALL_SPEED; // Use the constant fall speed
 
     at.style.top = top + "px";
-
-    const positionEntry = activeAsteroidPositions.find(pos => pos.element === at);
-    if (positionEntry) {
-        positionEntry.top = top;
-    }
+    positionEntry.top = top; // **Crucial**: Update the tracked position
 
     if (top > window.innerHeight) {
-      at.remove();
-      const index = activeAsteroidPositions.findIndex(pos => pos.element === at);
-      if (index > -1) {
-          activeAsteroidPositions.splice(index, 1);
-          // Note: usedXPositions is NOT cleared here because those initial positions
-          // are used for spacing future asteroids within the *same question*.
-          // It's cleared only when a new question starts.
-          i--;
-      }
+      at.remove(); // Remove the DOM element
+      activeAsteroidPositions.splice(i, 1); // Remove from tracking array
+      i--; // Decrement index to account for the removed element
     }
   }
 
+  // Check if all asteroids for the current question are gone and all options spawned
   if (asteroidContainer.querySelectorAll(".asteroid").length === 0 &&
       currentOptions.length === 0 &&
       !hasAnsweredCurrentQuestion) {
@@ -411,7 +415,7 @@ function moveAsteroids() {
 function showExplosion(at) {
   const rect = at.getBoundingClientRect();
   const explosion = document.createElement("img");
-  explosion.src = "explod.gif"; // Check this path!
+  explosion.src = "explod.gif"; // Ensure this path is correct
   explosion.style.width = "50px";
   explosion.style.position = "absolute";
   explosion.style.left = rect.left + "px";
@@ -465,3 +469,11 @@ function spawnInitialStars(count) {
 
 setInterval(spawnStar, 100);
 setInterval(moveStars, 50);
+
+// Utility function to shuffle an array (Fisher-Yates algorithm)
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+    }
+}
