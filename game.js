@@ -15,37 +15,27 @@ let currentQuestion = {};
 let currentOptions = [];
 let hasAnsweredCurrentQuestion = false;
 
-const questions = [ 
-  // your questions remain unchanged (omit for brevity)
-];
+const questions = [/* Insert your existing question array here */];
 
 window.addEventListener("load", () => {
   loadNewQuestion();
-  setInterval(spawnAsteroids, 2000); // asteroid spawn timing
-  setInterval(moveAsteroids, 50);    // asteroid falling speed controlled in moveAsteroids()
+  setInterval(spawnAsteroids, 2000);
+  setInterval(moveAsteroids, 50);
   spawnInitialStars(100);
 });
 
 window.addEventListener("click", fire);
 
 window.addEventListener("mousemove", (e) => {
-  ship_left = e.x;
+  ship_left = e.clientX - ship.offsetWidth / 2;
   ship_left = Math.max(0, Math.min(ship_left, window.innerWidth - ship.offsetWidth));
   ship.style.left = ship_left + "px";
 });
 
-window.addEventListener("keydown", (e) => {
-  if (e.key === "ArrowLeft") ship_left -= move_inter;
-  if (e.key === "ArrowRight") ship_left += move_inter;
-  if (e.key === " ") fire();
-  ship_left = Math.max(0, Math.min(ship_left, window.innerWidth - ship.offsetWidth));
-  ship.style.left = ship_left + "px";
-});
-
-// ✅ Touch support for ship movement
 window.addEventListener("touchmove", (e) => {
   const touchX = e.touches[0].clientX;
-  ship_left = Math.max(0, Math.min(touchX, window.innerWidth - ship.offsetWidth));
+  ship_left = touchX - ship.offsetWidth / 2;
+  ship_left = Math.max(0, Math.min(ship_left, window.innerWidth - ship.offsetWidth));
   ship.style.left = ship_left + "px";
 });
 
@@ -56,6 +46,7 @@ function loadNewQuestion() {
     endGame();
     return;
   }
+
   const allAsteroids = asteroidContainer.querySelectorAll(".asteroid");
   allAsteroids.forEach(a => a.remove());
 
@@ -65,40 +56,37 @@ function loadNewQuestion() {
 }
 
 function endGame() {
-  questionBox.textContent = `Game Over! Final Score: ${score} out of ${maxQuestions} questions answered.`;
+  questionBox.textContent = `Game Over! Final Score: ${score} out of ${maxQuestions}.`;
   const allAsteroids = asteroidContainer.querySelectorAll(".asteroid");
   allAsteroids.forEach(a => a.remove());
   window.removeEventListener("click", fire);
-  window.removeEventListener("keydown", fire);
 }
 
 function fire() {
   const ship_loc = ship.getBoundingClientRect();
-  const nozzleX = ship_loc.left + ship_loc.width * 0.5 - bullet.offsetWidth / 2;
+  const nozzleX = ship_loc.left + ship_loc.width / 2 - bullet.offsetWidth / 2;
   const nozzleY = ship_loc.top;
 
-  bullet.style.left = nozzleX + "px";
+  bullet.style.left = `${nozzleX}px`;
+  bullet.style.top = `${nozzleY}px`;
   bullet.style.display = "block";
   bullet_top = nozzleY;
-  bullet.style.top = bullet_top + "px";
 
-  // ✅ Bullet speed increased 40x (was 10)
-  const bulletSpeed = 400;
+  const bulletSpeed = 400; // 🚀 Bullet moves 400px/frame
 
-  let tid = setInterval(() => {
+  const tid = setInterval(() => {
     bullet_top -= bulletSpeed;
     bullet.style.top = bullet_top + "px";
 
     const asteroids = asteroidContainer.querySelectorAll(".asteroid");
-
-    asteroids.forEach((at) => {
+    for (const at of asteroids) {
       if (isCollapsed(bullet, at)) {
         showExplosion(at);
         const allAsteroids = asteroidContainer.querySelectorAll(".asteroid");
-        allAsteroids.forEach((asteroid) => asteroid.remove());
+        allAsteroids.forEach(a => a.remove());
 
-        const asteroidTextElement = at.querySelector(".asteroid-text");
-        if (asteroidTextElement && asteroidTextElement.textContent.trim().toLowerCase() === currentQuestion.answer.toLowerCase()) {
+        const text = at.querySelector(".asteroid-text")?.textContent.trim();
+        if (text && text.toLowerCase() === currentQuestion.answer.toLowerCase()) {
           score++;
         }
 
@@ -110,7 +98,7 @@ function fire() {
         loadNewQuestion();
         return;
       }
-    });
+    }
 
     if (bullet_top < 0) {
       clearInterval(tid);
@@ -136,17 +124,17 @@ function spawnAsteroids() {
     const at = document.createElement("div");
     at.classList.add("asteroid");
 
-    const rockImg = document.createElement("img");
-    rockImg.src = "rock1.gif";
-    rockImg.alt = "Asteroid";
-    rockImg.classList.add("asteroid-image");
+    const img = document.createElement("img");
+    img.src = "rock1.gif";
+    img.alt = "Asteroid";
+    img.classList.add("asteroid-image");
 
-    const optionText = document.createElement("span");
-    optionText.classList.add("asteroid-text");
-    optionText.textContent = opt;
+    const text = document.createElement("span");
+    text.classList.add("asteroid-text");
+    text.textContent = opt;
 
-    at.appendChild(rockImg);
-    at.appendChild(optionText);
+    at.appendChild(img);
+    at.appendChild(text);
 
     at.style.left = Math.random() * (window.innerWidth - 100) + "px";
     at.style.top = "0px";
@@ -157,22 +145,19 @@ function spawnAsteroids() {
 
 function moveAsteroids() {
   const asteroids = asteroidContainer.querySelectorAll(".asteroid");
-
   asteroids.forEach((at) => {
     let top = parseInt(at.style.top) || 0;
 
-    // ✅ Asteroid fall speed increased 15x (was 3)
-    top += 45;
+    top += 45; // 🪨 Asteroid drops 15x faster (was 3)
 
-    at.style.top = top + "px";
+    at.style.top = `${top}px`;
 
-    if (top > window.innerHeight) {
-      at.remove();
-    }
+    if (top > window.innerHeight) at.remove();
   });
 
   if (asteroidContainer.querySelectorAll(".asteroid").length === 0 &&
-    currentOptions.length === 0 && !hasAnsweredCurrentQuestion) {
+    currentOptions.length === 0 &&
+    !hasAnsweredCurrentQuestion) {
     hasAnsweredCurrentQuestion = true;
     loadNewQuestion();
   }
@@ -182,11 +167,12 @@ function showExplosion(at) {
   const rect = at.getBoundingClientRect();
   const explosion = document.createElement("img");
   explosion.src = "explod.gif";
-  explosion.style.width = "50px";
   explosion.style.position = "absolute";
-  explosion.style.left = rect.left + "px";
-  explosion.style.top = rect.top + "px";
+  explosion.style.width = "50px";
+  explosion.style.left = `${rect.left}px`;
+  explosion.style.top = `${rect.top}px`;
   document.body.appendChild(explosion);
+
   setTimeout(() => explosion.remove(), 500);
 }
 
@@ -199,8 +185,8 @@ function spawnStar() {
   star.style.top = "0px";
   star.style.opacity = Math.random();
   const size = Math.random() * 2 + 1;
-  star.style.width = size + "px";
-  star.style.height = size + "px";
+  star.style.width = `${size}px`;
+  star.style.height = `${size}px`;
   star.dataset.speed = Math.random() * 3 + 1;
   starsContainer.appendChild(star);
 }
@@ -211,7 +197,7 @@ function moveStars() {
     let top = parseFloat(star.style.top);
     let speed = parseFloat(star.dataset.speed);
     top += speed;
-    star.style.top = top + "px";
+    star.style.top = `${top}px`;
     if (top > window.innerHeight) star.remove();
   });
 }
@@ -224,8 +210,8 @@ function spawnInitialStars(count) {
     star.style.top = Math.random() * window.innerHeight + "px";
     star.style.opacity = Math.random();
     const size = Math.random() * 2 + 1;
-    star.style.width = size + "px";
-    star.style.height = size + "px";
+    star.style.width = `${size}px`;
+    star.style.height = `${size}px`;
     star.dataset.speed = Math.random() * 3 + 1;
     starsContainer.appendChild(star);
   }
