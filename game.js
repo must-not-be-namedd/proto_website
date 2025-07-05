@@ -138,18 +138,19 @@ const questions = [
   }
 ];
 
-
 window.addEventListener("load", () => {
   loadNewQuestion(); // Load the first question when the game starts
   setInterval(spawnAsteroids, 2000);
   setInterval(moveAsteroids, 50);
-  spawnInitialStars(100)
+  spawnInitialStars(100);
 });
 
 window.addEventListener("click", fire);
 
 window.addEventListener("mousemove", (e) => {
   ship_left = e.x;
+  // Ensure the ship stays within the visible window boundaries
+  ship_left = Math.max(0, Math.min(ship_left, window.innerWidth - ship.offsetWidth));
   ship.style.left = ship_left + "px";
 });
 
@@ -157,6 +158,16 @@ window.addEventListener("keydown", (e) => {
   if (e.key === "ArrowLeft") ship_left -= move_inter;
   if (e.key === "ArrowRight") ship_left += move_inter;
   if (e.key === " ") fire();
+  // Constrain ship movement
+  ship_left = Math.max(0, Math.min(ship_left, window.innerWidth - ship.offsetWidth));
+  ship.style.left = ship_left + "px";
+});
+
+// Touch-based horizontal ship movement for mobile devices
+window.addEventListener("touchmove", (e) => {
+  const touchX = e.touches[0].clientX;
+  ship_left = touchX;
+  ship_left = Math.max(0, Math.min(ship_left, window.innerWidth - ship.offsetWidth));
   ship.style.left = ship_left + "px";
 });
 
@@ -178,9 +189,8 @@ function loadNewQuestion() {
   currentOptions = [...currentQuestion.options];
 }
 
-
 function endGame() {
-  questionBox.textContent = `Game Over! Final Score: ${score} out of ${maxQuestions} questions answered.`; // More descriptive
+  questionBox.textContent = `Game Over! Final Score: ${score} out of ${maxQuestions} questions answered.`;
   // Remove remaining asteroids
   const allAsteroids = asteroidContainer.querySelectorAll(".asteroid");
   allAsteroids.forEach(a => a.remove());
@@ -189,7 +199,6 @@ function endGame() {
   window.removeEventListener("click", fire);
   window.removeEventListener("keydown", fire);
 }
-
 
 function fire() {
   const ship_loc = ship.getBoundingClientRect();
@@ -201,8 +210,13 @@ function fire() {
   bullet_top = nozzleY;
   bullet.style.top = bullet_top + "px";
 
+  // Set a default bullet speed; increase it if mobile is detected
+  let bulletSpeed = 10;
+  const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+  if (isMobile) bulletSpeed = 25; // Faster bullet speed for mobile
+
   let tid = setInterval(() => {
-    bullet_top -= 10;
+    bullet_top -= bulletSpeed;
     bullet.style.top = bullet_top + "px";
 
     const asteroids = asteroidContainer.querySelectorAll(".asteroid");
@@ -329,7 +343,6 @@ function spawnStar() {
   star.style.width = size + "px";
   star.style.height = size + "px";
 
-
   star.dataset.speed = Math.random() * 3 + 1;
 
   starsContainer.appendChild(star);
@@ -359,7 +372,6 @@ function spawnInitialStars(count) {
     const size = Math.random() * 2 + 1;
     star.style.width = size + "px";
     star.style.height = size + "px";
-
 
     star.dataset.speed = Math.random() * 3 + 1;
 
