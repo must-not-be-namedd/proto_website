@@ -52,9 +52,9 @@ document.addEventListener("DOMContentLoaded", () => {
         // Update theme toggle icon based on current theme
         if (elements.themeToggle) {
             if (theme === 'dark') {
-                elements.themeToggle.textContent = '☀️'; // Light mode icon
+                elements.themeToggle.textContent = '🌓'; // Light mode icon
             } else {
-                elements.themeToggle.textContent = '🌙'; // Dark mode icon
+                elements.themeToggle.textContent = '🌓'; // Dark mode icon
             }
         }
     }
