@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -594,6 +595,130 @@ footer {
                 font-size: 1rem;
             }
         }
+        /* General footer styling for background, padding, etc. */
+.footer {
+    background-color: #211327; /* A dark purple/grey background */
+    color: white; /* Make all text inside the footer white by default */
+    padding: 40px 5%; /* Adjust padding as needed */
+    font-family: Arial, sans-serif; /* Example font */
+}
+
+.footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around; /* Distribute sections evenly */
+    gap: 30px; /* Space between footer sections */
+    max-width: 1200px; /* Max width for the content */
+    margin: 0 auto; /* Center the container */
+}
+
+.footer-section {
+    flex: 1; /* Allows sections to grow and shrink */
+    min-width: 250px; /* Minimum width for each section before wrapping */
+    padding: 10px;
+    /* Ensure text alignment within sections is consistent */
+    text-align: left; /* Default alignment */
+}
+
+/* Styling for H3 headings within footer sections */
+.footer-section h3 {
+    color: rgb(208, 162, 235); /* Explicitly ensure headings are white */
+    font-size: 1.3em;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+/* Styling for paragraph text within footer sections */
+.footer-section p {
+    color: white; /* Explicitly ensure paragraph text is white */
+    font-size: 0.95em;
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+/* Styling for unordered lists in Quick Links */
+.footer-section ul {
+    list-style: none; /* Remove bullet points */
+    padding: 0;
+    margin: 0;
+}
+
+/* Styling for list items and links */
+.footer-section ul li {
+    margin-bottom: 8px;
+}
+
+.footer-section ul li a {
+    color: #d0b0f0; /* A lighter, subtle purple for links */
+    text-decoration: none;
+    font-size: 0.95em;
+    transition: color 0.3s ease;
+}
+
+.footer-section ul li a:hover {
+    color: #a020f0; /* Brighter purple on hover */
+}
+
+/* Styling for social icons container */
+.footer-section .socials {
+    display: flex;
+    justify-content: flex-start; /* Aligns items to the start of the container */
+    align-items: center; /* Vertically centers items */
+    gap: 15px; /* Space between social icons */
+    margin-top: 15px;
+    margin-bottom: 10px;
+    /* If you want them perfectly centered in the section, change to:
+    justify-content: center; */
+}
+
+/* Styling for social icon images */
+.footer-section .socials img {
+    width: 30px; /* Adjust size of social icons */
+    height: auto;
+    transition: transform 0.3s ease;
+}
+
+.footer-section .socials img:hover {
+    transform: translateY(-3px); /* Slight lift on hover */
+}
+
+/* Styling for the mail icon within the "Contact Us" section */
+.footer-section p img.icon {
+    vertical-align: middle; /* Aligns the image with the text baseline */
+    margin-right: 8px; /* Space between icon and text */
+    width: 20px; /* Adjust size of the mail icon */
+    height: auto;
+}
+
+/* Styling for the bottom copyright section */
+.footer-bottom {
+    text-align: center;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1); /* Subtle white line above copyright */
+    font-size: 0.85em;
+    color: rgba(255, 255, 255, 0.7); /* Slightly faded white for copyright text */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column; /* Stack sections vertically on smaller screens */
+        align-items: center; /* Center items when stacked */
+        text-align: center; /* Center text within sections */
+    }
+
+    .footer-section {
+        min-width: unset; /* Remove min-width restriction */
+        width: 100%; /* Take full width */
+        margin-bottom: 20px;
+    }
+
+    /* For social icons on small screens, explicitly center them */
+    .footer-section .socials {
+        justify-content: center; /* Center social icons when sections are stacked */
+    }
+}
     </style>
 </head>
 <body>
@@ -655,8 +780,9 @@ footer {
                 <h3>Quick Links</h3>
                 <ul>
                     <li><a href="index.html">Home</a></li>
-                    <li><a href="events.html">Events</a></li>
                     <li><a href="about.html">About Us</a></li>
+                    <li><a href="events.html">Events</a></li>
+                    
                     <li><a href="articles.html">Articles</a></li>
                     <li><a href="gallery.html">Gallery</a></li>
                     <li><a href="contact.html">Contact</a></li>
