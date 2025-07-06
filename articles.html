@@ -687,6 +687,185 @@ body.dark h2, body.dark h3 {
 
 
 .card-header p { font-size: 1rem; font-weight: 500; }
+/* General styles for the hamburger button - HIDDEN by default on very large screens */
+.hamburger {
+    display: none; /* Hidden by default */
+    background: none;
+    border: none;
+    color: white; /* Or whatever color matches your header */
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    z-index: 1000;
+}
+
+/* Media query to show hamburger for tablets and phones */
+@media (max-width: 1024px) { /* Adjust 1024px to whatever you consider the upper limit for 'tablet' screen width */
+    .hamburger {
+        display: block; /* Show the hamburger button */
+    }
+
+    /* Hide the main navigation links on screens up to 1024px */
+    .header .navbar {
+        display: none;
+    }
+
+    /* Ensure proper ordering if using flexbox on .header */
+    .header-left {
+        order: 1;
+    }
+
+    .header-right {
+        order: 3;
+    }
+}
+.h1{
+    color:#4A0070;
+    font-weight: 600;
+    font-size: 2rem;
+}
+/* Optional: If you want to refine responsiveness more, you might have another breakpoint */
+/* @media (max-width: 768px) {
+    .header .logo {
+        font-size: 1rem; // Smaller logo text on phones
+    }
+    .header-logo {
+        width: 35px; // Smaller logo image on phones
+        height: 35px;
+    }
+} */
+.footer-section h3 {
+    color: rgb(203, 203, 203); /* Makes the heading text white */
+}
+
+.footer-section p {
+    color: white; /* Makes the paragraph text white */
+}
+.footer-section h3 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: var(--pinkish-white);
+  }
+  
+  .footer-section p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+  /* General footer styling for background, padding, etc. */
+.footer {
+    background-color: #211327; /* A dark purple/grey background as seen in the image */
+    color: white; /* Make all text inside the footer white by default */
+    padding: 40px 5%; /* Adjust padding as needed */
+    font-family: Arial, sans-serif; /* Example font */
+}
+
+.footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around; /* Distribute sections evenly */
+    gap: 30px; /* Space between footer sections */
+    max-width: 1200px; /* Max width for the content */
+    margin: 0 auto; /* Center the container */
+}
+
+.footer-section {
+    flex: 1; /* Allows sections to grow and shrink */
+    min-width: 250px; /* Minimum width for each section before wrapping */
+    padding: 10px;
+}
+
+/* Styling for H3 headings within footer sections */
+.footer-section h4 {
+    color: rgb(208, 162, 235); /* Explicitly ensure headings are white */
+    font-size: 1.3em;
+    margin-bottom: 15px;
+    position: relative; /* For potential underline effect */
+}
+
+/* Styling for paragraph text within footer sections */
+.footer-section p {
+    color: white; /* Explicitly ensure paragraph text is white */
+    font-size: 0.95em;
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+/* Styling for unordered lists in Quick Links */
+.footer-section ul {
+    list-style: none; /* Remove bullet points */
+    padding: 0;
+    margin: 0;
+}
+
+/* Styling for list items and links */
+.footer-section ul li {
+    margin-bottom: 8px;
+}
+
+.footer-section ul li a {
+    color: #d0b0f0; /* A lighter, subtle purple for links as seen in the image */
+    text-decoration: none;
+    font-size: 0.95em;
+    transition: color 0.3s ease;
+}
+
+.footer-section ul li a:hover {
+    color: #a020f0; /* Brighter purple on hover */
+}
+
+/* Styling for social icons container */
+.footer-section .socials {
+    display: flex;
+    gap: 15px; /* Space between social icons */
+    margin-top: 15px;
+    margin-bottom: 10px; /* Space before location text */
+}
+
+/* Styling for social icon images */
+.footer-section .socials img {
+    width: 30px; /* Adjust size of social icons */
+    height: auto;
+    transition: transform 0.3s ease;
+}
+
+.footer-section .socials img:hover {
+    transform: translateY(-3px); /* Slight lift on hover */
+}
+
+/* Styling for location icon and text */
+.footer-section p i.icon {
+    margin-right: 8px; /* Space between icon and text */
+    color: white; /* Ensure icon is white */
+}
+
+/* Styling for the bottom copyright section */
+.footer-bottom {
+    text-align: center;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1); /* Subtle white line above copyright */
+    font-size: 0.85em;
+    color: rgba(255, 255, 255, 0.7); /* Slightly faded white for copyright text */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column; /* Stack sections vertically on smaller screens */
+        align-items: center; /* Center items when stacked */
+        text-align: center; /* Center text within sections */
+    }
+
+    .footer-section {
+        min-width: unset; /* Remove min-width restriction */
+        width: 100%; /* Take full width */
+        margin-bottom: 20px;
+    }
+
+    .footer-section .socials {
+        justify-content: center; /* Center social icons */
+    }
+}
 
     </style>
 </head>
@@ -703,7 +882,7 @@ body.dark h2, body.dark h3 {
             </div>
             <nav id="navbar" class="navbar">
                 <a href="index.html">Home</a>
-                <a href="about.html">About Us</a>
+                <a href="about.html">About</a>
                 <a href="events.html">Events</a>
                 <a href="articles.html" class="active">Articles</a>
                 <a href="gallery.html">Gallery</a>
@@ -734,8 +913,8 @@ body.dark h2, body.dark h3 {
         <div class="container px-4 py-12">
             <!-- Page Header -->
             <div class="text-center mb-12">
-                <h1 class="text-5xl font-bold text-white mb-4 md:text-5xl">Tech Articles & Insights</h1>
-                <p class="text-xl text-gray-300 max-w-2xl mx-auto">
+                <h1 >Tech Articles & Insights</h1>
+                <p >
                     Discover the latest trends, tutorials, and insights from our community of developers
                 </p>
             </div>
@@ -763,15 +942,15 @@ body.dark h2, body.dark h3 {
     <footer class="footer">
         <div class="footer-container">
             <div class="footer-section">
-                <h3>Protocol</h3>
+                <h4>Protocol</h4>
                 <p>
-                    Your hub for innovation in programming, fostering a community of learners and creators.
+                    Official computer science club of BMS College of Engineering, Bengaluru. Join us in our journey of innovation and learning.
                 </p>
                 
             </div>
 
             <div class="footer-section">
-                <h3>Quick Links</h3>
+                <h4>Quick Links</h4>
                 <ul>
                     <li><a href="index.html">Home</a></li>
                     <li><a href="about.html">About Us</a></li>
@@ -783,7 +962,7 @@ body.dark h2, body.dark h3 {
             </div>
 
             <div class="footer-section">
-                <h3>Contact Us</h3>
+                <h4>Contact Us</h4>
                 <div class="socials">
                     <a href="https://www.linkedin.com/company/protocol-bmsce/" target="_blank"><img src="logos/linkedinlogo.png" alt="LinkedIn"></a>
                     <a href="https://www.instagram.com/protocol_bmsce?igsh=MTBjcmpzMWtxeW9ncQ==" target="_blank"><img src="logos/instalogo.png" alt="insta"></a>
