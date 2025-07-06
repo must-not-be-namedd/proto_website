@@ -218,11 +218,12 @@ body.dark {
     width: 320px; /* Adjust size of the neon circle */
     height: 320px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #7a00b8, #3a014f); /* Adjusted neon circle gradient */
+    background: linear-gradient(135deg, #2a013f, #230130); /* Adjusted neon circle gradient */
     display: flex;
     align-items: center;
     justify-content: center;
     animation: glow 2s infinite alternate, grow-shrink 2s infinite ease-in-out; /* Apply both animations */
+  
 }
 
 .hero-logo-image {
@@ -233,10 +234,10 @@ body.dark {
 
 @keyframes glow {
     0% {
-        box-shadow: 0 0 10px #9400d3, 0 0 20px #7a00b8; /* Reduced glow intensity */
+        box-shadow: 0 0 10px #3483a4, 0 0 20px #79c6d9; /* Reduced glow intensity */
     }
     100% {
-        box-shadow: 0 0 15px #7a00b8, 0 0 30px #9400d3;
+        box-shadow: 0 0 15px #3591a2, 0 0 30px #52889f;
     }
 }
 
@@ -430,7 +431,7 @@ footer .socials img:hover {
   }
   
   .footer-section .socials img {
-    width: 48px;
+    width: 55px;
     height: 35px;
     transition: transform 0.3s;
     text-align: center;
