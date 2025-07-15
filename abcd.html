@@ -161,6 +161,147 @@
     text-align: center;
 
   }
+  .h2{
+    color: #7a00b8;
+  }
+  .footer {
+    background-color: #0c0c2c; /* Deep navy color */
+    color: #fff;
+    padding: 2rem 1rem;
+    text-align: center; /* This centers the footer-bottom text and acts as a fallback */
+    display: flex; /* Enable flexbox for the footer itself */
+    flex-direction: column; /* Stack children (container and bottom) vertically */
+    align-items: center; /* Center footer-container and footer-bottom horizontally */
+    width: 100%;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: center; /* Center the footer sections when they wrap */
+    align-items: flex-start; /* Align sections to the top */
+    flex-wrap: wrap;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%; /* Ensure container takes full width to center effectively */
+}
+
+.footer-section {
+    flex: 1;
+    min-width: 200px;
+    text-align: center; /* **Crucial: Center text within each section** */
+    /* Add max-width to control section width on large screens and prevent excessive stretching */
+    max-width: 300px; /* Adjust as needed */
+}
+
+.footer-section h3 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: #fff; /* Ensure headings are white or suitable for the dark background */
+}
+
+.footer-section p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-section ul li {
+    margin: 0.5rem 0;
+}
+
+.footer-section ul li a {
+    color: #c5a1e4; /* Subtle lavender color for links */
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+}
+
+.footer-section ul li a:hover {
+    color: #ffffff; /* White on hover */
+}
+
+.footer-section .socials {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+    justify-content: center; /* **Center social icons** */
+    align-items: center;
+    width: 100%; /* Ensure the flex container for socials takes full width to center its content */
+}
+
+.footer-section .socials img {
+    width: 35px;
+    height: 27px;
+    transition: transform 0.3s;
+    /* Remove redundant flex properties here, they apply to the container not the image */
+}
+
+.footer-section .socials img:hover {
+    transform: scale(1.2);
+}
+
+.footer-bottom {
+    margin-top: 2rem;
+    font-size: 0.8rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    padding-top: 1rem;
+    width: 100%; /* Ensure the border spans the full width */
+}
+
+.icon {
+    width: 40px;
+    height: 30px;
+    margin-right: 0.5rem;
+    vertical-align: middle;
+    /* justify-content: center is for flex containers, not individual elements */
+}
+
+.footer-logo {
+    width: 15px; /* Adjust logo size */
+    height: 13px;
+    border-radius: 50%;
+    border: 3px solid #3b0051;
+    /* justify-content: center is for flex containers, not individual elements */
+}
+
+/* Responsive adjustments for central alignment on smaller screens */
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column; /* Stack sections vertically */
+        align-items: center; /* Center the stacked sections */
+        gap: 1.5rem; /* Adjust gap for stacked sections */
+    }
+
+    .footer-section {
+        min-width: unset; /* Remove min-width to allow full width on small screens */
+        width: 90%; /* Give some padding from the sides */
+        max-width: 350px; /* Constrain width on smaller screens for readability */
+        margin-bottom: 1.5rem; /* Space between stacked sections */
+    }
+
+    .footer-section:last-child {
+        margin-bottom: 0;
+    }
+
+    .footer-section h3,
+    .footer-section p,
+    .footer-section ul {
+        text-align: center; /* Explicitly center text for all elements within sections on mobile */
+    }
+
+    .footer-section ul {
+        padding: 0; /* Ensure no extra padding pushing list items */
+    }
+
+    .footer-section .socials {
+        justify-content: center; /* Explicitly center social icons on mobile */
+    }
+}
     </style>
 </head>
 <body class="dark">
@@ -191,7 +332,7 @@
         <button id="close-sidebar" class="close-sidebar">&times;</button>
         <nav class="sidebar-nav">
             <a href="index.html" class="active">Home</a>
-            <a href="about.html">About</a>
+            <a href="about.html">About Us</a>
             <a href="events.html">Events</a>
             <a href="articles.html">Articles</a>
             <a href="gallery.html">Gallery</a>
@@ -234,29 +375,32 @@
         <div class="footer-container">
             <div class="footer-section">
                 <h3>Protocol Club</h3>
-                <p>Official computer science club of BMS College of Engineering, Bengaluru. Join us in our journey of innovation and learning.</p>
-                <div class="socials">
-                    <a href="https://www.linkedin.com/company/protocol-bmsce/"><img src="logos/linkedinlogo.png" alt="LinkedIn"></a>
-                    <a href="https://www.instagram.com/protocol_bmsce?igsh=MTBjcmpzMWtxeW9ncQ=="><img src="logos/instalogo.png" alt="Instagram"></a>
-                    <a href="mailto:protocol.cse@bmsce.ac.in"><img src="logos/maillogo.png" alt="Gmail"></a>
-                </div>
+                <p>Official Club of the Department of Computer Science and Engineering
+Join us in our journey of innovation and learning.</p>
+                
             </div>
             <div class="footer-section">
                 <h3>Quick Links</h3>
                 <ul>
                     <li><a href="index.html">Home</a></li>
-                    <li><a href="about.html">About Us</a></li>
+                     <li><a href="about.html">About Us</a></li>
                     <li><a href="events.html">Events</a></li>
-                    
+                   
                     <li><a href="articles.html">Articles</a></li>
                     <li><a href="gallery.html">Gallery</a></li>
-                    <li><a href="contact.html">Contact Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+
                 </ul>
             </div>
             <div class="footer-section">
                 <h3>Contact Us</h3>
-                <p><img src="logos/maillogo.png" alt="Gmail" class="icon"> protocol.cse@bmsce.ac.in</p>
+                <p>protocol.cse@bmsce.ac.in</p>
                 <p>B M S College of Engineering<br>Bull Temple Road, Basavanagudi<br>Bengaluru - 560019</p>
+                <div class="socials">
+                    <a href="https://www.linkedin.com/company/protocol-bmsce/"><img src="logos/linkedinlogo.png" alt="LinkedIn"></a>
+                    <a href="https://www.instagram.com/protocol_bmsce?igsh=MTBjcmpzMWtxeW9ncQ=="><img src="logos/instalogo.png" alt="Instagram"></a>
+                    <a href="mailto:protocol.cse@bmsce.ac.in"><img src="logos/maillogo.png" alt="Gmail"></a>
+                </div>
             </div>
         </div>
         <div class="footer-bottom">
