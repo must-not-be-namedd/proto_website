@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -595,128 +596,155 @@ footer {
                 font-size: 1rem;
             }
         }
-        /* General footer styling for background, padding, etc. */
+ 
+/* Footer Styles */
 .footer {
-    background-color: #211327; /* A dark purple/grey background */
-    color: white; /* Make all text inside the footer white by default */
-    padding: 40px 5%; /* Adjust padding as needed */
-    font-family: Arial, sans-serif; /* Example font */
+    background-color: #0c0c2c; /* Deep navy color */
+    color: #fff;
+    padding: 2rem 1rem;
+    text-align: center; /* Centers text like the copyright */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Horizontally centers the footer-container and footer-bottom */
+    width: 100%;
 }
 
 .footer-container {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around; /* Distribute sections evenly */
-    gap: 30px; /* Space between footer sections */
-    max-width: 1200px; /* Max width for the content */
-    margin: 0 auto; /* Center the container */
+    justify-content: center; /* Centers the footer sections horizontally within the footer */
+    align-items: flex-start; /* Aligns sections to the top */
+    flex-wrap: wrap; /* Allows sections to wrap to the next line on smaller screens */
+    gap: 2rem; /* Space between footer sections */
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%; /* Ensures the container takes full width for proper centering */
 }
 
 .footer-section {
     flex: 1; /* Allows sections to grow and shrink */
-    min-width: 250px; /* Minimum width for each section before wrapping */
-    padding: 10px;
-    /* Ensure text alignment within sections is consistent */
-    text-align: left; /* Default alignment */
+    min-width: 200px; /* Minimum width for each section before wrapping */
+    text-align: center; /* **Crucial: Centers text within each footer section** */
+    max-width: 300px; /* Optional: Sets a max width for sections on larger screens */
 }
 
-/* Styling for H3 headings within footer sections */
 .footer-section h3 {
-    color: rgb(208, 162, 235); /* Explicitly ensure headings are white */
-    font-size: 1.3em;
-    margin-bottom: 15px;
-    position: relative;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: #fff;
+    /* text-align: center is inherited from .footer-section, no need to redefine */
 }
 
-/* Styling for paragraph text within footer sections */
 .footer-section p {
-    color: white; /* Explicitly ensure paragraph text is white */
-    font-size: 0.95em;
-    line-height: 1.6;
-    margin-bottom: 10px;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    /* text-align: center is inherited from .footer-section, no need to redefine */
 }
 
-/* Styling for unordered lists in Quick Links */
 .footer-section ul {
-    list-style: none; /* Remove bullet points */
+    list-style: none;
     padding: 0;
-    margin: 0;
+    /* text-align: center is inherited from .footer-section, no need to redefine */
 }
 
-/* Styling for list items and links */
 .footer-section ul li {
-    margin-bottom: 8px;
+    margin: 0.5rem 0;
 }
 
 .footer-section ul li a {
-    color: #d0b0f0; /* A lighter, subtle purple for links */
+    color: #c5a1e4; /* Subtle lavender color for links */
     text-decoration: none;
-    font-size: 0.95em;
-    transition: color 0.3s ease;
+    font-size: 0.9rem;
+    transition: color 0.3s;
 }
 
 .footer-section ul li a:hover {
-    color: #a020f0; /* Brighter purple on hover */
+    color: #ffffff; /* White on hover */
 }
 
-/* Styling for social icons container */
 .footer-section .socials {
     display: flex;
-    justify-content: flex-start; /* Aligns items to the start of the container */
-    align-items: center; /* Vertically centers items */
-    gap: 15px; /* Space between social icons */
-    margin-top: 15px;
-    margin-bottom: 10px;
-    /* If you want them perfectly centered in the section, change to:
-    justify-content: center; */
+    flex-direction: row; /* **Default to row for horizontal icons as per your desired desktop layout (image_ebc3a9.png)** */
+    gap: 1rem;
+    margin-top: 1rem;
+    justify-content: center; /* **Centers the social icons horizontally** */
+    align-items: center;
+    width: 100%; /* Ensures the flex container for socials takes full width to center its content */
 }
 
-/* Styling for social icon images */
 .footer-section .socials img {
-    width: 30px; /* Adjust size of social icons */
-    height: auto;
-    transition: transform 0.3s ease;
+    width: 30px;
+    height: 28px; /* Set a specific height as shown in the images */
+    transition: transform 0.3s;
+    object-fit: contain; /* Ensures the image scales correctly within its bounds */
 }
 
 .footer-section .socials img:hover {
-    transform: translateY(-3px); /* Slight lift on hover */
+    transform: scale(1.2);
 }
 
-/* Styling for the mail icon within the "Contact Us" section */
-.footer-section p img.icon {
-    vertical-align: middle; /* Aligns the image with the text baseline */
-    margin-right: 8px; /* Space between icon and text */
-    width: 20px; /* Adjust size of the mail icon */
-    height: auto;
-}
-
-/* Styling for the bottom copyright section */
 .footer-bottom {
-    text-align: center;
-    margin-top: 30px;
-    padding-top: 20px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1); /* Subtle white line above copyright */
-    font-size: 0.85em;
-    color: rgba(255, 255, 255, 0.7); /* Slightly faded white for copyright text */
+    margin-top: 2rem;
+    font-size: 0.8rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    padding-top: 1rem;
+    width: 100%; /* Ensure the border spans the full width */
 }
 
-/* Responsive adjustments */
+/* Specific styling for icons within contact info (if applicable) */
+.footer-section p img.icon {
+    width: 18px; /* Example size */
+    height: 18px;
+    vertical-align: middle;
+    margin-right: 8px;
+}
+
+/* Responsive adjustments for central alignment on smaller screens */
 @media (max-width: 768px) {
     .footer-container {
-        flex-direction: column; /* Stack sections vertically on smaller screens */
-        align-items: center; /* Center items when stacked */
-        text-align: center; /* Center text within sections */
+        flex-direction: column; /* Stack sections vertically */
+        align-items: center; /* Center the stacked sections */
+        gap: 1.5rem;
     }
 
     .footer-section {
-        min-width: unset; /* Remove min-width restriction */
-        width: 100%; /* Take full width */
-        margin-bottom: 20px;
+        min-width: unset; /* Remove min-width to allow full width on small screens */
+        width: 90%; /* Give some padding from the sides */
+        max-width: 350px; /* Constrain width on smaller screens for readability */
+        margin-bottom: 1.5rem; /* Space between stacked sections */
     }
 
-    /* For social icons on small screens, explicitly center them */
+    .footer-section:last-child {
+        margin-bottom: 0;
+    }
+
+    .footer-section h3,
+    .footer-section p,
+    .footer-section ul {
+        text-align: center; /* Explicitly center text for all elements within sections on mobile */
+    }
+
+    .footer-section ul {
+        padding: 0; /* Ensure no extra padding pushing list items */
+    }
+
     .footer-section .socials {
-        justify-content: center; /* Center social icons when sections are stacked */
+        flex-direction: row; /* Keep social icons horizontal on mobile */
+        justify-content: center; /* Explicitly center social icons on mobile */
+        gap: 1rem;
+    }
+}
+
+/* For very small phones, optional adjustments */
+@media (max-width: 480px) {
+    .footer {
+        padding: 1.5rem 3%; /* Further reduce horizontal padding */
+    }
+    .footer-section h3 {
+        font-size: 1rem;
+    }
+    .footer-section p,
+    .footer-section ul li a {
+        font-size: 0.85rem;
     }
 }
     </style>
@@ -769,12 +797,9 @@ footer {
         <div class="footer-container">
             <div class="footer-section">
                 <h3>Protocol Club</h3>
-                <p>Official computer science club of BMS College of Engineering, Bengaluru. Join us in our journey of innovation and learning.</p>
-                <div class="socials">
-                    <a href="https://www.linkedin.com/company/protocol-bmsce/"><img src="logos/linkedinlogo.png" alt="LinkedIn"></a>
-                    <a href="https://www.instagram.com/protocol_bmsce?igsh=MTBjcmpzMWtxeW9ncQ=="><img src="logos/instalogo.png" alt="Instagram"></a>
-                    <a href="mailto:protocol.cse@bmsce.ac.in"><img src="logos/maillogo.png" alt="Gmail"></a>
-                </div>
+                <p>Official Club of the Department of Computer Science and Engineering
+Join us in our journey of innovation and learning.</p>
+                
             </div>
             <div class="footer-section">
                 <h3>Quick Links</h3>
@@ -791,8 +816,13 @@ footer {
             </div>
             <div class="footer-section">
                 <h3>Contact Us</h3>
-                <p><img src="logos/maillogo.png" alt="Gmail" class="icon"> protocol.cse@bmsce.ac.in</p>
+                <p>protocol.cse@bmsce.ac.in</p>
                 <p>B M S College of Engineering<br>Bull Temple Road, Basavanagudi<br>Bengaluru - 560019</p>
+                <div class="socials">
+                    <a href="https://www.linkedin.com/company/protocol-bmsce/"><img src="logos/linkedinlogo.png" alt="LinkedIn"></a>
+                    <a href="https://www.instagram.com/protocol_bmsce?igsh=MTBjcmpzMWtxeW9ncQ=="><img src="logos/instalogo.png" alt="Instagram"></a>
+                    <a href="mailto:protocol.cse@bmsce.ac.in"><img src="logos/maillogo.png" alt="Gmail"></a>
+                </div>
             </div>
         </div>
         <div class="footer-bottom">
