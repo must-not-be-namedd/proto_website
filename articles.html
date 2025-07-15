@@ -1,278 +1,1543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Articles & Insights - Protocol</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+      <link rel="stylesheet" href="styles.css">
+      <link rel="stylesheet" href="abcd.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+    /* Kept some variables for consistency where new styles didn't directly replace */
+    --primary-gradient-start: #3b82f6; /* blue-500 */
+    --primary-gradient-end: #8b5cf6; /* purple-600 */
+
+    /* Core text colors for dark mode - ONLY DARK MODE RETAINED */
+    --main-text-dark: #1d1d1d; /* Light grey for most content text in dark mode */
+    --contrast-text-dark: #ffffff; /* White for headers and prominent elements in dark mode */
+    --subtle-text-dark: #050404; /* Lighter grey for gray-300 in dark mode */
+    --subtle-text-dark-more: #373636; /* Even lighter grey for gray-400 in dark mode */
+
+    /* Input specific variables for dark mode */
+    --input-bg: rgba(255, 255, 255, 0.05); /* Slightly transparent white for inputs */
+    --input-border: rgba(255, 255, 255, 0.15); /* Slightly transparent white for input borders */
+    --placeholder-color: rgba(255, 255, 255, 0.4); /* Lighter placeholder for dark mode */
+
+    /* Custom Deep Purple for Headings and Categories - NEW */
+    --deep-purple-text: #3d0656e6; /* Defined a deep purple color variable */
+    --subtext-deep-purple: #44096; /* NEW: Deep purple for subtext */
+    --card-title-underline-color: #d0609a; /* NEW: Color for underlined card titles */
+    --pinkish-white: #FFE0F0; /* Defined a pinkish-white color variable for article titles */
+}
+
+
+/* General styling - Now implicitly for dark mode as light mode is removed */
+body {
+    margin: 0;
+    background-image: url('bg.jpg'); /* This will be layered with the dark background below */
+    font-family: 'Poppins', sans-serif;
+    color: var(--main-text-dark); /* Default text color from dark mode variable */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    min-height: 100vh;
+    transition: background 0.3s ease, color 0.3s ease;
+    background-color: #120915; /* Solid dark background for dark mode */
+}
+
+/* Dark mode specific styles - These become the default */
+body.dark {
+    background-color: #120915; /* Ensure dark background is applied */
+    color: var(--main-text-dark); /* Ensure text color is from dark mode variable */
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(to left, #211327, #020202);
+    padding: 12px 5%;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #ffffff; /* "Protocol" name explicitly white */
+    gap: 10px;
+    text-decoration: none; /* Removed underline for .logo */
+}
+
+.header-logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid #8a2be2;
+    margin-right: 10px;
+}
+
+.navbar {
+    display: flex;
+    gap: 20px;
+}
+
+.navbar a {
+    color: rgb(212, 173, 237); /* Retained subtle purple for nav links */
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: color 0.3s;
+    padding: 0.5rem 0;
+    white-space: nowrap;
+}
+
+.navbar a:hover,
+.navbar a.active {
+    color: #a020f0; /* Dark mode hover color */
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.theme-toggle {
+    background: none;
+    border: none;
+    color: #ffffff; /* Theme toggle icon explicitly white */
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 0.3rem;
+}
+
+.hamburger {
+    background: none;
+    border: none;
+    color: #ffffff; /* Hamburger icon explicitly white */
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.3rem;
+    margin-right: 15px;
+    z-index: 1001;
+    display: block;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 250px;
+    height: 100vh;
+    background: #333;
+    z-index: 1000;
+    transition: left 0.3s ease;
+    padding: 2rem 1.5rem;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+    overflow-y: auto;
+}
+
+.sidebar.open {
+    left: 0;
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 3rem;
+}
+
+.sidebar-nav a {
+    color: #E0E0E0;
+    text-decoration: none;
+    font-size: 1rem;
+    padding: 0.8rem 1rem;
+    border-radius: 5px;
+    transition: all 0.3s;
+}
+
+.sidebar-nav a:hover,
+.sidebar-nav a.active {
+    background: rgba(122, 0, 184, 0.3);
+}
+
+.close-sidebar {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 998;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+}
+
+.overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Buttons (Mimicking Shadcn/ui Button) */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    border: 1px solid transparent;
+}
+
+.btn.btn-ghost {
+    background-color: transparent;
+    color: var(--subtle-text-dark);
+}
+
+.btn.btn-ghost:hover {
+    color: var(--main-text-dark);
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.btn.btn-sm {
+    height: 2rem;
+    padding: 0 0.75rem;
+    font-size: 0.875rem;
+}
+
+.btn.btn-sm.p-1 {
+    padding: 0.25rem;
+}
+
+.btn.btn-default {
+    background: linear-gradient(to right, var(--primary-gradient-start), var(--primary-gradient-end));
+    color: var(--contrast-text-dark);
+    border-color: transparent;
+}
+
+.btn.btn-default:hover {
+    opacity: 0.9;
+}
+
+.btn.btn-outline {
+    background-color: transparent;
+    border-color: rgba(255, 255, 255, 0.05);
+    color: var(--main-text-dark);
+}
+
+.btn.btn-outline:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Inputs (Mimicking Shadcn/ui Input) */
+.input {
+    display: flex;
+    width: 100%;
+    border-radius: 0.375rem;
+    border: 1px solid var(--input-border);
+    background-color: var(--input-bg);
+    color: var(--main-text-dark);
+    padding: 0.5rem 0.75rem;
+    font-size: 1rem;
+}
+
+.input::placeholder {
+    color: var(--placeholder-color);
+}
+
+.input:focus {
+    outline: none;
+    border-color: var(--primary-gradient-end);
+    box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.5);
+}
+
+/* Cards (Mimicking Shadcn/ui Card) */
+.card {
+    background-color: #6e6e6e; /* Darkish grey background for cards */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.5rem;
+    overflow: hidden;
+    backdrop-filter: blur(8px);
+    transition: all 0.3s ease-in-out, box-shadow 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    animation: fadeInUp 0.6s ease-out forwards;
+    opacity: 0;
+}
+
+.card:hover {
+    background-color: rgba(46, 46, 46, 0.8);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
+}
+
+.card-content p {
+    font-weight: 500;
+    color: #d6d4d4; /* Card content text explicitly white */
+}
+
+.card-header {
+    padding: 1.5rem;
+    flex-grow: 1;
+}
+
+.card-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--pinkish-white); /* Card title now pinkish-white */
+    transition: color 0.3s ease-in-out;
+}
+
+.card:hover .card-title {
+    color: #60a5fa; /* blue-400 */
+}
+
+/* Specific style for featured article titles - now consistent for dark mode */
+#featuredArticlesSection .card-header .card-title a {
+    color: var(--pinkish-white); /* Featured article title now pinkish-white */
+    text-decoration: underline; /* Added underline */
+    text-decoration-color: var(--card-title-underline-color); /* Underline color */
+}
+
+
+.card-content {
+    padding: 1.5rem;
+    padding-top: 0;
+}
+
+/* Author name specific styling - Now consistent for dark mode */
+.author-name {
+    color: var(--subtle-text-dark);
+}
+
+/* Badges (Mimicking Shadcn/ui Badge) */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 0.25rem;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    line-height: 1;
+    border: 1px solid;
+    white-space: nowrap;
+}
+
+/* Specific badge colors (kept as is, assuming these are meant to be vibrant regardless of mode) */
+.badge.bg-blue-500\/20 { background-color: rgba(59, 130, 246, 0.2); color: #60a5fa; border-color: rgba(59, 130, 246, 0.3); }
+.badge.bg-green-500\/20 { background-color: rgba(34, 197, 94, 0.2); color: #4ade80; border-color: rgba(34, 197, 94, 0.3); }
+.badge.bg-purple-500\/20 { background-color: rgba(168, 85, 247, 0.2); color: #c084fc; border-color: rgba(168, 85, 247, 0.3); }
+.badge.bg-yellow-500\/20 { background-color: rgba(251, 191, 36, 0.2); color: #fcd34d; border-color: rgba(251, 191, 36, 0.3); }
+.badge.bg-red-500\/20 { background-color: rgba(239, 68, 68, 0.2); color: #f87171; border-color: rgba(239, 68, 68, 0.3); }
+.badge.bg-gray-500\/20 { background-color: rgba(107, 114, 128, 0.2); color: #9ca3af; border-color: rgba(107, 114, 128, 0.3); }
+
+/* Animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Utility Classes */
+.container {
+    max-width: 1280px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.px-4 { padding-left: 1rem; padding-right: 1rem; }
+.py-4 { padding-top: 1rem; padding-bottom: 1rem; }
+.py-12 { padding-top: 3rem; padding-bottom: 3rem; }
+.py-16 { padding-top: 4rem; padding-bottom: 4rem; }
+
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.mb-4 { margin-bottom: 1rem; }
+.mb-8 { margin-bottom: 2rem; }
+.mb-12 {
+    margin-bottom: 3rem;
+    font-weight: 525;
+}
+.mb-16 { margin-bottom: 4rem; }
+.mr-1 { margin-right: 0.25rem; }
+.mr-2 { margin-right: 0.5rem; }
+.mr-3 { margin-right: 0.75rem; }
+
+.text-xl { font-size: 1.25rem; line-height: 1.75rem; }
+.text-lg { font-size: 1.125rem; line-height: 1.75rem; }
+.text-sm { font-size: 0.875rem; line-height: 1.25rem; }
+.text-xs { font-size: 0.75rem; line-height: 1rem; }
+.text-5xl { font-size: 3rem; line-height: 1; }
+@media (min-width: 768px) {
+    .md\:text-5xl { font-size: 3rem; line-height: 1; }
+}
+
+.font-bold { font-weight: 700; }
+.font-medium { font-weight: 500; }
+.font-semibold { font-weight: 600; }
+
+/* Color classes now reflect dark mode variables and new deep purple */
+.text-white { color: #E0E0E0; }
+.text-gray-300 { color: #ffffff; } /* text-gray-300 now deep purple */
+.text-gray-400 { color:#191313; } /* text-gray-400 now deep purple */
+.text-blue-400 { color: #60a5fa; }
+
+/* Main headings to deep purple */
+h1 {
+    color: var(--deep-purple-text); /* Main heading in deep purple */
+}
+
+/* Subheadings (h2, h3) can remain contrast-text-dark or be set explicitly */
+h2, h3 {
+    color: var(--deep-purple-text); /* Remains white as per previous setup */
+}
+
+/* Ensure body.dark doesn't override specific heading colors if desired */
+body.dark h1 {
+    color: var(--deep-purple-text); /* Ensure main heading remains deep purple in dark mode */
+}
+
+body.dark h2, body.dark h3 {
+    color: var(--deep-purple-text); /* Ensure subheadings remain white in dark mode */
+}
+
+/* MODIFIED: Subtext below the main heading (assuming this is `p` tag within a relevant section) */
+/* This rule will target paragraph elements that typically serve as subtext. */
+/* You might need to refine this selector if your HTML structure is different,
+   e.g., if the subtext has a specific class like `<p class="main-subtext">`. */
+.main-heading-subtext { /* Add this class to your subtext paragraph in HTML */
+    color: var(--subtext-deep-purple); /* Apply the new deep purple color */
+}
+
+
+.logo, .theme-toggle, .hamburger {
+    color: var(--contrast-text-dark);
+}
+
+
+.flex { display: flex; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+.justify-center { justify-content: center; }
+.flex-col { flex-direction: column; }
+.flex-wrap { flex-wrap: wrap; }
+.space-x-2 > *:not([hidden]) ~ *:not([hidden]) { margin-left: 0.5rem; }
+.space-x-3 > *:not([hidden]) ~ *:not([hidden]) { margin-left: 0.75rem; }
+.space-x-4 > *:not([hidden]) ~ *:not([hidden]) { margin-left: 1rem; }
+.gap-2 { gap: 0.5rem; }
+.gap-4 { gap: 1rem; }
+.gap-8 { gap: 2rem; }
+
+.relative { position: relative; }
+.absolute { position: absolute; }
+.inset-0 { top: 0; right: 0; bottom: 0; left: 0; }
+.left-3 { left: 0.75rem; }
+.top-1\/2 { top: 50%; }
+.-translate-y-1\/2 { transform: translateY(-50%); }
+.h-4 { height: 1rem;color: #4A0070; }
+.w-4 { width: 1rem; }
+.h-6 { height: 1.5rem; }
+.w-6 { width: 1.5rem; }
+.h-8 { height: 2rem; }
+.w-8 { width: 2rem; }
+.w-full { width: 100%; }
+.h-full { height: 100%; }
+.max-w-2xl { max-width: 42rem; }
+.mx-auto { margin-left: auto; margin-right: auto; }
+
+.rounded-lg { border-radius: 0.5rem; }
+.rounded-full { border-radius: 9999px; }
+.overflow-hidden { overflow: hidden; }
+.aspect-video { aspect-ratio: 16 / 9; }
+.object-cover { object-fit: cover; }
+
+/* Avatar colors (CSS gradient translation) */
+.bg-gradient-from-blue-to-purple { background: linear-gradient(to right, #3b82f6, #8b5cf6); }
+.bg-gradient-from-green-to-teal { background: linear-gradient(to right, #22c55e, #14b8a6); }
+.bg-gradient-from-purple-to-pink { background: linear-gradient(to right, #a855f7, #ec4899); }
+.bg-gradient-from-yellow-to-orange { background: linear-gradient(to right, #f59e0b, #f97316); }
+.bg-gradient-from-red-to-pink { background: linear-gradient(to right, #ef4444, #ec4899); }
+
+/* Responsive Grid Adjustments */
+.grid { display: grid; }
+@media (min-width: 768px) {
+    .md\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .md\:flex-row { flex-direction: row; }
+}
+@media (min-width: 1024px) {
+    .lg\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+/* Footer Styles */
+.footer {
+    width: 100%;
+    background-color: #0c0c2c;
+    color: var(--main-text-dark);
+    padding: 2rem 1rem;
+    text-align: center;
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-section {
+    flex: 1;
+    min-width: 200px;
+    text-align: left;
+}
+
+.footer-section h3 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: var(--contrast-text-dark);
+}
+
+.footer-section p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--main-text-dark);
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-section ul li {
+    margin: 0.5rem 0;
+}
+
+.footer-section ul li a {
+    color: #c5a1e4;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+}
+
+.footer-section ul li a:hover {
+    color: #ffffff;
+}
+
+.footer-section .socials {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer-section .socials img {
+    width: 48px;
+    height: 35px;
+    transition: transform 0.3s;
+}
+
+.footer-section .socials img:hover {
+    transform: scale(1.2);
+}
+
+.footer-bottom {
+    margin-top: 2rem;
+    font-size: 0.8rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    padding-top: 1rem;
+    color: var(--main-text-dark);
+}
+
+.icon {
+    width: 40px;
+    height: 30px;
+    margin-right: 0.5rem;
+    vertical-align: middle;
+}
+
+/* Custom button for Read More */
+.btn.btn-read-more {
+    background: linear-gradient(to right, #6a0dad, #9400d3);
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 0.375rem;
+    font-weight: 600;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+}
+
+.btn.btn-read-more:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1024px) {
+    .navbar {
+        display: none;
+    }
+    .header-logo {
+        width: 35px;
+        height: 35px;
+    }
+    .logo {
+        font-size: 1.1rem;
+        margin-left: 0;
+    }
+    .header-left {
+        width: auto;
+        justify-content: flex-start;
+    }
+}
+@media (max-width: 768px) {
+    .header {
+        padding: 10px 3%;
+    }
+    .logo {
+        font-size: 1rem;
+    }
+    .header-logo {
+        width: 30px;
+        height: 30px;
+    }
+    .hamburger {
+        font-size: 1.3rem;
+    }
+    .text-5xl { font-size: 2.5rem; }
+    .text-xl { font-size: 1.125rem; }
+    .card-header { padding: 1rem; }
+    .card-title { font-size: 1rem; }
+    .card-content { padding: 1rem; padding-top: 0;}
+    .btn.btn-sm { font-size: 0.75rem; padding: 0 0.5rem; height: 1.8rem;}
+    .flex-col.md\:flex-row { flex-direction: column; }
+    .footer-section {
+        min-width: 100%;
+        text-align: center;
+    }
+    .footer-section .socials {
+        justify-content: center;
+    }
+}
+@media (max-width: 480px) {
+    .sidebar {
+        width: 80%;
+    }
+    .text-5xl { font-size: 2rem; }
+    .text-xl { font-size: 1rem; }
+    .card-header { padding: 0.8rem; }
+    .card-title { font-size: 0.9rem; }
+    .card-content { padding: 0.8rem; padding-top: 0;}
+    .btn.btn-sm { font-size: 0.7rem; padding: 0 0.4rem; height: 1.6rem;}
+}
+
+
+.card-header p { font-size: 1rem; font-weight: 500; }
+/* General styles for the hamburger button - HIDDEN by default on very large screens */
+.hamburger {
+    display: none; /* Hidden by default */
+    background: none;
+    border: none;
+    color: white; /* Or whatever color matches your header */
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    z-index: 1000;
+}
+
+/* Media query to show hamburger for tablets and phones */
+@media (max-width: 1024px) { /* Adjust 1024px to whatever you consider the upper limit for 'tablet' screen width */
+    .hamburger {
+        display: block; /* Show the hamburger button */
+    }
+
+    /* Hide the main navigation links on screens up to 1024px */
+    .header .navbar {
+        display: none;
+    }
+
+    /* Ensure proper ordering if using flexbox on .header */
+    .header-left {
+        order: 1;
+    }
+
+    .header-right {
+        order: 3;
+    }
+}
+.h1{
+    color:#4A0070;
+    font-weight: 600;
+    font-size: 2rem;
+}
+/* Footer Styles */
+footer {
+    background-color: #311B51; /* Deep purple background as seen in the image */
+    color: #fff; /* White text color */
+    padding: 40px 0; /* Add top/bottom padding, no horizontal padding here */
+    font-family: Arial, sans-serif; /* Adjust font to match your site's typography */
+    text-align: center; /* Center align text within the footer sections */
+    position: relative; /* Needed for any absolute positioning if you add elements later */
+    width: 100%; /* Ensure it spans full width */
+    box-sizing: border-box; /* Include padding in the element's total width and height */
+}
+
+/* Inner Container for main footer content (excluding copyright) */
+.footer-content {
+    display: flex; /* Use flexbox for distribution */
+    flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+    justify-content: space-around; /* Distribute items with space around them */
+    align-items: flex-start; /* Align items to the start of the cross axis (top) */
+    max-width: 1200px; /* Max width for content to prevent it from spreading too wide */
+    margin: 0 auto; /* Center the content horizontally */
+    padding: 0 20px; /* Add horizontal padding to create space from the ends */
+    box-sizing: border-box;
+}
+
+/* Styling for each major section within the footer-content */
+.footer-section {
+    flex: 1; /* Allow sections to grow and shrink */
+    min-width: 250px; /* Minimum width before wrapping */
+    padding: 20px; /* Padding inside each section */
+    box-sizing: border-box;
+    text-align: center; /* Center content within each section */
+}
+
+.footer-section h4 {
+    color: rgb(245, 244, 245);
+    margin-bottom: 20px;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.footer-section p {
+    color: #fff;
+    margin-bottom: 10px;
+    line-height: 1.6;
+    font-size: 0.9em;
+}
+
+/* Social Icons */
+.social-icons {
+    margin-top: 15px;
+}
+
+.social-icons a {
+    display: inline-block;
+    margin: 0 10px;
+    color: #fff;
+    font-size: 24px; /* Adjust icon size as needed */
+    text-decoration: none;
+    transition: transform 0.3s ease;
+}
+
+.social-icons a:hover {
+    transform: translateY(-3px);
+}
+
+/* Quick Links Specific Styling */
+.footer-section.quick-links ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-section.quick-links ul li {
+    margin-bottom: 10px;
+}
+
+.footer-section.quick-links ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.9em;
+    transition: color 0.3s ease;
+}
+
+.footer-section.quick-links ul li a:hover {
+    color: #007bff; /* Example hover color for links */
+}
+
+/* Contact Us Specific Styling */
+.footer-section.contact-us .contact-info {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center the email and address lines */
+    margin-bottom: 10px;
+}
+
+.footer-section.contact-us .contact-info .icon {
+    font-size: 20px; /* Size of email icon */
+    margin-right: 10px;
+}
+
+.footer-section.contact-us .contact-info a,
+.footer-section.contact-us .contact-info p {
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.9em;
+    line-height: 1.5;
+}
+
+
+/* Copyright Section */
+.copyright {
+    border-top: 1px solid rgba(255, 255, 255, 0.1); /* Subtle line above copyright */
+    padding-top: 20px;
+    margin-top: 30px;
+    font-size: 0.8em;
+    color: rgba(255, 255, 255, 0.7); /* Slightly faded copyright text */
+    text-align: center;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column; /* Stack sections vertically on smaller screens */
+        align-items: center; /* Center items when stacked */
+    }
+
+    .footer-section {
+        width: 100%; /* Full width when stacked */
+        padding: 20px 10px; /* Adjust padding */
+    }
+}
+.footer-section .socials img {
+    width: 38px;
+    height: 27px;
+    transition: transform 0.3s;
+    text-align: center;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+  }
+  .footer-bottom{
+    color: #ffffff;
+  }
+
+
+    </style>
+</head>
+<body>
+    <div class="min-h-screen">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <!-- Hamburger icon is now always displayed and is the first element for correct order -->
+                <button id="hamburger" class="hamburger"><i class="fas fa-bars"></i></button>
+                <a href="index.html" class="logo">
+                    <img src="logos/proto.png" alt="Protocol Logo" class="header-logo"> Protocol 
+                </a>
+            </div>
+            <nav id="navbar" class="navbar">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="events.html">Events</a>
+                <a href="articles.html" class="active">Articles</a>
+                <a href="gallery.html">Gallery</a>
+                <a href="contact.html">Contact</a>
+                <a href="game.html">CLICK HERE</a>
+            </nav>
+            <div class="header-right">
+                <button id="theme-toggle" class="theme-toggle">🌓</button>
+            </div>
+        </header>
+
+        <!-- Sidebar -->
+        <aside id="sidebar" class="sidebar">
+            <button id="close-sidebar" class="close-sidebar"><i class="fas fa-times"></i></button>
+            <nav class="sidebar-nav">
+                <a href="index.html">Home</a>
+                <a href="about.html">About Us</a>
+                <a href="events.html">Events</a>
+                <a href="articles.html" class="active">Articles</a>
+                <a href="gallery.html">Gallery</a>
+                <a href="contact.html">Contact</a>
+                  <a href="game.html">CLICK HERE</a>
+            </nav>
+        </aside>
+        <div class="overlay" id="overlay"></div>
+
+        <!-- Articles Content -->
+        <div class="container px-4 py-12">
+            <!-- Page Header -->
+            <div class="text-center mb-12">
+                <h1 >Tech Articles & Insights</h1>
+                <p >
+                    Discover the latest trends, tutorials, and insights from our community of developers
+                </p>
+            </div>
+
+            <!-- Removed Search and Filter section -->
+            <div class="flex flex-wrap gap-2 mb-12 justify-center">
+                <!-- Categories will be rendered by JS -->
+            </div>
+
+            <!-- Featured Articles -->
+            <div id="featuredArticlesSection" class="mb-16">
+                <!-- Content will be rendered by JS -->
+            </div>
+
+            <!-- Regular Articles -->
+            <div id="regularArticlesSection">
+                <!-- Content will be rendered by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Quiz Pop-up Modal -->
+    
+    <!-- Footer added -->
+   <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h4>Protocol Club</h4>
+                <p>Official Club of the Department of Computer Science and Engineering
+Join us in our journey of innovation and learning.</p>
+                
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                     <li><a href="about.html">About Us</a></li>
+                    <li><a href="events.html">Events</a></li>
+                   
+                    <li><a href="articles.html">Articles</a></li>
+                    <li><a href="gallery.html">Gallery</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contact Us</h4>
+                <p> protocol.cse@bmsce.ac.in</p>
+                <p>B M S College of Engineering<br>Bull Temple Road, Basavanagudi<br>Bengaluru - 560019</p>
+                <div class="socials">
+                    <a href="https://www.linkedin.com/company/protocol-bmsce/"><img src="logos/linkedinlogo.png" alt="LinkedIn"></a>
+                    <a href="https://www.instagram.com/protocol_bmsce?igsh=MTBjcmpzMWtxeW9ncQ=="><img src="logos/instalogo.png" alt="Instagram"></a>
+                    <a href="mailto:protocol.cse@bmsce.ac.in"><img src="logos/maillogo.png" alt="Gmail"></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            © 2025 Protocol Club. All rights reserved.
+        </div>
+    </footer>
+
+
+    <script>
+        const articles = [
+    {
+        id: "1",
+        title: "Would You Delete Your Worst Memory? The Science and Ethics of Rewriting the Mind",
+        excerpt: "Imagine a world where your memories aren't just yours, they're downloadable, shareable, and editable. What if you could relive your most cherished moments, not by recalling them, but by downloading them directly into your mind? Or perhaps, you could erase a painful past, replacing it with something more comforting.",
+        content: "Full article content here...",
+        author: "Aaron B Ajay ",
+        authorAvatar: "AB",
+        readTime: "8 min read",
+        category: ["Technology"], // Changed to array
+        tags: ["Web Development", "Trends", "2025", "JavaScript"],
+
+        featured: true,
+        image: "https://media.licdn.com/dms/image/v2/D5612AQE-rFQszn0g3g/article-cover_image-shrink_720_1280/B56ZeV9G6dHUAM-/0/1750567519925?e=1756944000&v=beta&t=YTkf37VrecFCeA_k39J-8QA0ugbf-8i625ch-zF1nh0",
+        link: "https://www.linkedin.com/pulse/would-you-delete-your-worst-memory-science-ethics-rewriting-8dykc/?trackingId=CI0xxnHyR7eZpMFuih696A%3D%3D",
+    },
+    {
+        id: "2",
+        title: "Neural Processing Unit: The Microchip that Thinks Like You",
+        excerpt: "Imagine a chip that thinks, not like a computer, but like a human brain. A chip that can process thousands of inputs in real time, learn from them, adapt on the fly, and make decisions, all while sipping power like a smartphone on standby. That chip exists today, and it's called the Neural Processing Unit (NPU).",
+        content: "Full article content here...",
+        author: "Aaryan Prakash",
+        authorAvatar: "AP",
+  
+        readTime: "12 min read",
+        category: ["Education", "Tutorial"], // Changed to array
+        tags: ["React", "JavaScript", "Performance", "Best Practices"],
+        featured: false,
+        image: "https://media.licdn.com/dms/image/v2/D5612AQEIiwRmqjeYhg/article-cover_image-shrink_720_1280/B56ZabiCBRHsAI-/0/1746366112706?e=1756944000&v=beta&t=whgivMQK0VvYijYjsoF33RfFIZafPZytB0lOnOU622E",
+        link: "https://www.linkedin.com/pulse/neural-processing-unit-microchip-thinks-like-you-protocol-bmsce-hzy4c/?trackingId=IL2IsEWeQ5mjooLHk5E7Ww%3D%3D", // Placeholder link
+    },
+    {
+        id: "3",
+        title: "The Quantum Clock is Ticking: Why Every Password You've Ever Created is Living on Borrowed Time",
+        excerpt: "You wake up, grab your phone, and unlock it with your fingerprint. You check your banking app with a six-digit PIN, scroll through social media with your saved password, and pay for your auto ride to college using UPI. By 9 AM, you've used dozens of passwords and encryption keys without thinking twice about them.But somewhere in a lab, a quantum computer just got a little bit better at breaking every single one of them.",
+        content: "Full article content here...",
+        author: "Sam Jacob ",
+        authorAvatar: "SJ",
+ 
+        readTime: "6 min read",
+        category: ["Tutorial"], // Changed to array
+        tags: ["Competitive Programming", "Journey", "Learning", "Algorithms"],
+        featured: true,
+        image: "https://media.licdn.com/dms/image/v2/D5612AQHRyWme3k3uOw/article-cover_image-shrink_720_1280/B56ZdN6eFoGsAI-/0/1749358866928?e=1756944000&v=beta&t=dq268VKBL5uwwAN-uSddrRpY71rqjVVtJQo560OlN_s",
+        link: "https://www.linkedin.com/pulse/quantum-clock-ticking-why-every-password-youve-ever-created-zc9oc/?trackingId=O7k2VMqZSZmVtYjwIj1d%2BA%3D%3D", // Placeholder link
+    },
+    {
+        id: "4",
+        title: "Electric Aircraft: The Future of Aviation",
+        excerpt: "In 1903, the Wright brothers' 12-second flight changed everything. Today, aviation connects our global economy, but at a cost. Commercial aviation accounts for 2.5% of global carbon emissions, and with climate commitments looming, the industry faces a critical question: Can we keep flying without destroying the planet?The answer is taking shape in hangars and test facilities worldwide: Electric Aircrafts.",
+        content: "Full article content here...",
+        author: "Aaryan Prakash",
+        authorAvatar: "AP",
+     
+        readTime: "10 min read",
+        category: ["Education"], // Changed to array
+        tags: ["Machine Learning", "AI", "Beginner", "Python"],
+        featured: false,
+        image: "https://media.licdn.com/dms/image/v2/D5612AQGEvArWLE2g9Q/article-cover_image-shrink_720_1280/B56Zcq4sUYG0AI-/0/1748771194784?e=1756944000&v=beta&t=Ggrr4ftlrxadLftyWDD4gdolsSzso6jn4RoxZU2q84A",
+        link:"https://www.linkedin.com/pulse/electric-aircraft-future-aviation-protocol-bmsce-xkrcc/?trackingId=weSeXCE0Tamw63Oh6%2FuxpQ%3D%3D", // Placeholder link
+    },
+    {
+        id: "5",
+        title: "How Does Google Maps Always Know the Fastest Route?",
+        excerpt: "Perhaps the most impressive feature of Google Maps isn't just its ability to show current traffic, it's the capacity to predict future conditions.Google's prediction algorithms are constantly learning, explains Dr. Raj Patel, an AI researcher specializing in transportation networks.They analyze patterns from millions of previous trips to understand how traffic.",
+        content: "Full article content here...",
+        author: "Aaryan Prakash",
+        authorAvatar: "AP",
+      
+        readTime: "7 min read",
+        category: ["Technology"], // Changed to array
+        tags: ["Open Source", "Git", "GitHub", "Contribution"],
+        featured: false,
+        image: "https://media.licdn.com/dms/image/v2/D5612AQHSv4KOYH23Bg/article-cover_image-shrink_720_1280/B56ZbfPj4VHUAI-/0/1747502121891?e=1756944000&v=beta&t=cZkryU7mewjnT8tqIMObdE76TQC2V88yAlvkYQG_LiQ",
+        link: "https://www.linkedin.com/pulse/how-does-google-maps-always-know-fastest-route-protocol-bmsce-yqjsc/?trackingId=NHSNBCzGSsSgyAWfZnTI6w%3D%3D", // Placeholder link
+    },
+    {
+        id: "6",
+        title: "Quantum Communication for Military Security",
+        excerpt: "In an era where cyber threats are escalating and quantum computing looms on the horizon, traditional encryption methods, once considered unbreakable, are becoming increasingly vulnerable. Quantum communication emerges as a revolutionary solution, offering unprecedented security for military operations.",
+        content: "Full article content here...",
+        author: "Aaryan Prakash ",
+        authorAvatar: "AP",
+        readTime: "9 min read",
+        category: ["Security"], // Changed to array
+        tags: ["Cybersecurity", "Web Security", "OWASP", "Best Practices"],
+        featured: true,
+        image: "https://media.licdn.com/dms/image/v2/D5612AQF8RMMt68POqA/article-cover_image-shrink_720_1280/B56Za9gMf3GsAI-/0/1746936069241?e=1756944000&v=beta&t=afJtVh-Y6kWhs4AQ8l5FCxbAZFGGyNpGoYCHbn9OQL4",
+        link: "https://www.linkedin.com/pulse/quantum-communication-military-security-protocol-bmsce-vyooc/?trackingId=WIPAtfHsQz2HlDCf68aaoA%3D%3D", // Placeholder link
+    },
+    {
+        id: "7",
+        title: "How India's UPI Became the World’s Most Advanced Payment Protocol",
+        excerpt: "Every time you pay ₹80 to a momo vendor, you’re using one of the most elegant, secure, scalable financial systems ever built. Take a moment to appreciate the orchestration behind it. Because you didn’t just send money. You triggered a national supercomputer, and it smiled back.",
+        content: "Full article content here...",
+        author: "Aaryan Prakash",
+        authorAvatar: "AP",
+       
+        readTime: "11 min read",
+        category: ["Technology", "Personal"], // New article, with multiple categories
+        tags: ["AI", "Creativity", "Future", "Ethics"],
+        featured: false,
+        image: "https://media.licdn.com/dms/image/v2/D5612AQGavKh4IMkUgg/article-cover_image-shrink_720_1280/B56ZdyHfGrHEAI-/0/1749966254986?e=1756944000&v=beta&t=5ZRSY2gN9fq1qvMsef7eEAmYi-3reJL72lVwqF73uw4",
+        link: "https://www.linkedin.com/pulse/how-indias-upi-became-worlds-most-advanced-payment-protocol-zybxc/?trackingId=kE7h63HwRZK6SjhofYGVRw%3D%3D", // Placeholder link
+    },
+];
+
+const categories = ["All", "Technology", "Tutorial", "Personal", "Education", "Security"];
+
+let searchTerm = "";
+let selectedCategory = "All";
+
+// Helper function to get category color classes
+function getCategoryColor(categoryName) {
+    const colors = {
+        Technology: "bg-blue-500/20 text-blue-300 border-blue-500/30",
+        Tutorial: "bg-green-500/20 text-green-300 border-green-500/30",
+        Personal: "bg-purple-500/20 text-purple-300 border-purple-500/30",
+        Education: "bg-yellow-500/20 text-yellow-300 border-yellow-500/30",
+        Security: "bg-red-500/20 text-red-300 border-red-500/30",
+        Featured: "bg-purple-500/20 text-purple-300 border-purple-500/30", // Assuming 'Featured' badge color
+    };
+    return colors[categoryName] || "bg-gray-500/20 text-gray-300 border-gray-500/30";
+}
+
+// Helper function to get avatar background gradient
+function getAvatarColor(name) {
+    const colors = [
+        "from-blue-500 to-purple-600",
+        "from-green-500 to-teal-600",
+        "from-purple-500 to-pink-600",
+        "from-yellow-500 to-orange-600",
+        "from-red-500 to-pink-600",
+    ];
+    // Map simple gradient classes to actual CSS classes
+    const gradientMap = {
+        "from-blue-500 to-purple-600": "bg-gradient-from-blue-to-purple",
+        "from-green-500 to-teal-600": "bg-gradient-from-green-to-teal",
+        "from-purple-500 to-pink-600": "bg-gradient-from-purple-to-pink",
+        "from-yellow-500 to-orange-600": "bg-gradient-from-yellow-to-orange",
+        "from-red-500 to-pink-600": "bg-gradient-from-red-to-pink",
+    };
+    const selectedColor = colors[name.length % colors.length];
+    return gradientMap[selectedColor];
+}
+
+function renderArticles() {
+    const filteredArticles = articles.filter((article) => {
+        const matchesSearch =
+            article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            article.excerpt.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            article.tags.some((tag) => tag.toLowerCase().includes(searchTerm.toLowerCase()));
+
+        // Check if any of the article's categories match the selectedCategory
+        const matchesCategory = selectedCategory === "All" || article.category.includes(selectedCategory);
+        return matchesSearch && matchesCategory;
+    });
+
+    const featuredArticles = filteredArticles.filter((article) => article.featured);
+    const regularArticles = filteredArticles.filter((article) => !article.featured);
+
+    const featuredSection = document.getElementById("featuredArticlesSection");
+    const regularSection = document.getElementById("regularArticlesSection");
+
+    // Clear previous content
+    if (featuredSection) featuredSection.innerHTML = "";
+    if (regularSection) regularSection.innerHTML = "";
+
+    // Render Featured Articles
+    if (featuredArticles.length > 0 && featuredSection) {
+        const featuredHeader = document.createElement("h2");
+        featuredHeader.className = "text-3xl font-bold mb-8 flex items-center";
+        featuredHeader.style.color = "#4B0082"; // Deep purple
+        featuredHeader.innerHTML = `
+            <i class="fa-solid fa-book-open h-8 w-8 mr-3 text-blue-400"></i> Featured Articles
+        `;
+        featuredSection.appendChild(featuredHeader);
+
+        const featuredGrid = document.createElement("div");
+        featuredGrid.className = "grid md:grid-cols-2 gap-8";
+
+        featuredArticles.forEach((article, index) => {
+            const articleCard = document.createElement("div");
+            articleCard.className = "card group hover:bg-white/10 transition-all duration-500";
+            articleCard.style.animationDelay = `${index * 100}ms`; // Staggered animation
+            
+            // Generate category badges
+            const categoryBadgesHtml = article.category.map(cat => `
+                <span class="badge ${getCategoryColor(cat)}">${cat}</span>
+            `).join('');
+
+            articleCard.innerHTML = `
+                <a href="${article.link}" target="_blank" class="aspect-video relative overflow-hidden block">
+                    <img
+                        src="${article.image || "https://placehold.co/600x400"}"
+                        alt="${article.title}"
+                        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                    <div class="absolute top-4 left-4 flex gap-2">
+                        ${categoryBadgesHtml}
+                    </div>
+                    <div class="absolute top-4 right-4">
+                        <span class="badge ${getCategoryColor("Featured")}">Featured</span>
+                    </div>
+                </a>
+                <div class="card-header">
+                    <a href="${article.link}" target="_blank" class="text-decoration-none">
+                        <h3 class="card-title text-xl">${article.title}</h3>
+                    </a>
+                    <p class="text-gray-300">${article.excerpt}</p>
+                </div>
+                <div class="card-content">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-8 h-8 ${getAvatarColor(article.author)} rounded-full flex items-center justify-center text-white font-bold text-sm">
+                                ${article.authorAvatar}
+                            </div>
+                            <div>
+                                <div class="author-name text-sm font-medium">${article.author}</div>
+                                
+                            </div>
+                        </div>
+                        <div class="text-gray-400 text-sm flex items-center">
+                            <i class="fa-regular fa-clock h-3 w-3 mr-1"></i>
+                            ${article.readTime}
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div class="flex space-x-4 text-gray-400 text-sm">
+                            
+                        </div>
+                        <a href="${article.link}" target="_blank" class="btn btn-read-more">Read More</a>
+                    </div>
+                </div>
+            `;
+            featuredGrid.appendChild(articleCard);
+        });
+        featuredSection.appendChild(featuredGrid);
+    }
+
+    if (regularSection) { // Check if regularSection exists before appending
+        const regularHeader = document.createElement("h2");
+        regularHeader.className = "text-3xl font-bold mb-8";
+        regularHeader.textContent = "Latest Articles";
+        regularSection.appendChild(regularHeader);
+
+        const regularGrid = document.createElement("div");
+        regularGrid.className = "grid md:grid-cols-2 lg:grid-cols-3 gap-8";
+
+        regularArticles.forEach((article, index) => {
+            const articleCard = document.createElement("div");
+            articleCard.className = "card group hover:bg-white/10 transition-all duration-500";
+            articleCard.style.animationDelay = `${index * 100}ms`;
+
+            // Generate category badges
+            const categoryBadgesHtml = article.category.map(cat => `
+                <span class="badge ${getCategoryColor(cat)}">${cat}</span>
+            `).join('');
+
+            articleCard.innerHTML = `
+                <a href="${article.link}" target="_blank" class="aspect-video relative overflow-hidden block">
+                    <img
+                        src="${article.image || "https://placehold.co/600x400"}"
+                        alt="${article.title}"
+                        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                    <div class="absolute top-4 left-4 flex gap-2">
+                        ${categoryBadgesHtml}
+                    </div>
+                </a>
+                <div class="card-header">
+                    <a href="${article.link}" target="_blank" class="text-decoration-none">
+                        <h3 class="card-title text-lg">${article.title}</h3>
+                    </a>
+                    <p class="text-gray-300 text-sm">${article.excerpt}</p>
+                </div>
+                <div class="card-content">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center space-x-2">
+                            <div class="w-6 h-6 ${getAvatarColor(article.author)} rounded-full flex items-center justify-center text-white font-bold text-xs">
+                                ${article.authorAvatar}
+                            </div>
+                            <div class="author-name text-sm">${article.author}</div>
+                        </div>
+                        <div class="text-gray-400 text-xs flex items-center">
+                            <i class="fa-regular fa-clock h-3 w-3 mr-1"></i>
+                            ${article.readTime}
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div class="flex space-x-3 text-gray-400 text-sm">
+                           
+                            
+                        </div>
+                        <a href="${article.link}" target="_blank" class="btn btn-read-more">Read More</a>
+                    </div>
+                </div>
+            `;
+            regularGrid.appendChild(articleCard);
+        });
+        regularSection.appendChild(regularGrid);
+    }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
-    // --- Element Selectors ---
-    const elements = {
-        themeToggle: document.getElementById("theme-toggle"),
-        body: document.body,
-        hamburger: document.getElementById('hamburger'),
-        sidebar: document.getElementById('sidebar'),
-        closeSidebar: document.getElementById('close-sidebar'),
-        navbar: document.getElementById('navbar'),
-        navLinks: document.querySelectorAll('#navbar a, .sidebar-nav a'), // Include sidebar links for closing sidebar
-        days: document.getElementById("days"),
-        hours: document.getElementById("hours"),
-        minutes: document.getElementById("minutes"),
-        seconds: document.getElementById("seconds"),
-        changingWords: document.querySelectorAll('.changing-word'),
-        bookViewer: document.getElementById('book-viewer'), // Added for 3D book viewer
-        closeBookButton: document.getElementById('close-book'), // Added for 3D book viewer
-        prevPageButton: document.getElementById('prev-page'), // Added for 3D book viewer
-        nextPageButton: document.getElementById('next-page'), // Added for 3D book viewer
-        pages: document.querySelectorAll('.book .page'), // Added for 3D book viewer
-        pdfViewerModal: document.getElementById('pdf-viewer-modal'), // Added for PDF viewer
-        closePdfViewerBtn: document.getElementById('close-pdf-viewer'), // Added for PDF viewer
-        pdfIframe: document.getElementById('pdf-iframe'), // Added for PDF viewer
-    };
+    const categoryButtonsContainer = document.querySelector(".flex.flex-wrap.gap-2");
 
-    // --- Configuration ---
-    const config = {
-        // Target date will be calculated dynamically to be 32 days from now
-        words: ["Creativity", "Innovation", "Learning", "Technology"],
-        fadeDuration: 500, // Consistent variable for fade duration
-        sidebarSlideDuration: '0.3s', //Added CSS transition duration
-        defaultTheme: 'light',
-    };
+    // Render category buttons (initial call)
+    if (categoryButtonsContainer) {
+        categories.forEach(category => {
+            const button = document.createElement("button");
+            button.className = `btn btn-sm ${selectedCategory === category ? "btn-default" : "btn-outline"} transition-all duration-300`;
+            button.textContent = category.replace(/-/g, ' ').replace(/\b\w/g, char => char.toUpperCase()); // Format text
+            button.addEventListener("click", () => {
+                selectedCategory = category;
+                renderCategoryButtons(); // Re-render buttons to update active state
+                renderArticles(); // Re-render articles based on new category
+            });
+            categoryButtonsContainer.appendChild(button);
+        });
+    }
 
-    // --- State ---
-    let wordIndex = 0;
-    let currentPage = 0; // For 3D book viewer
-    let targetCountdownDate; // Will store the dynamically calculated target date for the countdown
-    let countdownInterval; // To store the interval ID for clearing
+    // Function to re-render category buttons (for active state)
+    function renderCategoryButtons() {
+        if (!categoryButtonsContainer) return; // Exit if container not found
 
-    // --- Helper Functions ---
+        categoryButtonsContainer.innerHTML = ''; // Clear existing buttons
+        // Categories array is already defined globally, no need to redefine here
 
-    /**
-     * Applies a theme to the body by toggling a class.
-     * @param {string} theme - The theme to apply ('light' or 'dark').
-     */
-    function setTheme(theme) {
-        elements.body.classList.remove('light', 'dark'); // Remove both to be safe
-        elements.body.classList.add(theme);
-        localStorage.setItem("theme", theme);
+        categories.forEach(category => {
+            const button = document.createElement("button");
+            button.className = `btn btn-sm ${selectedCategory === category ? "btn-default" : "btn-outline"} transition-all duration-300`;
+            button.textContent = category.replace(/-/g, ' ').replace(/\b\w/g, char => char.toUpperCase()); // Format text
+            button.addEventListener("click", () => {
+                selectedCategory = category;
+                renderCategoryButtons();
+                renderArticles();
+            });
+            categoryButtonsContainer.appendChild(button);
+        });
+    }
 
-        // Update theme toggle icon based on current theme
-        if (elements.themeToggle) {
-            if (theme === 'dark') {
-                elements.themeToggle.textContent = '🌓'; // Light mode icon
-            } else {
-                elements.themeToggle.textContent = '🌓'; // Dark mode icon
-            }
+    // Initial render of articles
+    renderArticles();
+
+    // Sidebar and Theme Toggle Logic
+    const body = document.body;
+    const hamburger = document.getElementById('hamburger');
+    const sidebar = document.getElementById('sidebar');
+    const closeSidebar = document.getElementById('close-sidebar');
+    const overlay = document.getElementById('overlay');
+    const navLinks = document.querySelectorAll('.sidebar-nav a');
+
+    function toggleSidebar() {
+        if (sidebar && overlay) {
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('active');
         }
     }
 
-    /**
-     * Handles the changing word animation.
-     */
-    function handleChangingWord() {
-        if (elements.changingWords.length === 0) return;
+    if (hamburger) hamburger.addEventListener('click', toggleSidebar);
+    if (closeSidebar) closeSidebar.addEventListener('click', toggleSidebar);
+    if (overlay) overlay.addEventListener('click', toggleSidebar);
 
-        elements.changingWords.forEach(element => {
-            element.classList.add('fade-out');
-            setTimeout(() => {
-                element.textContent = config.words[wordIndex];
-                element.classList.remove('fade-out');
-                element.classList.add('fade-in');
-            }, config.fadeDuration);
+    // Close sidebar when a navigation link is clicked
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            if (sidebar && sidebar.classList.contains('open')) { // Check if sidebar exists and is open
+                toggleSidebar();
+            }
         });
-        wordIndex = (wordIndex + 1) % config.words.length;
+    });
+
+    // 3D Book Viewer Logic (from previous context)
+    const bookViewer = document.getElementById('book-viewer');
+    const closeBookButton = document.getElementById('close-book');
+    const prevPageButton = document.getElementById('prev-page');
+    const nextPageButton = document.getElementById('next-page');
+    const pages = document.querySelectorAll('.book .page');
+    let currentPage = 0; // Local state for book viewer
+
+    function updateBookView() {
+        if (!pages || pages.length === 0) return;
+
+        pages.forEach((page, index) => {
+            if (index < currentPage) {
+                page.style.transform = 'rotateY(-180deg)';
+                page.style.zIndex = pages.length - index;
+            } else {
+                page.style.transform = 'rotateY(0deg)';
+                page.style.zIndex = pages.length + (index === currentPage ? 1 : 0);
+            }
+        });
+
+        if (prevPageButton) prevPageButton.disabled = currentPage === 0;
+        if (nextPageButton) nextPageButton.disabled = currentPage >= pages.length - 1;
     }
 
-    /**
-     * Handles the countdown timer.
-     * Starts the countdown from 32 days and ensures positive numbers.
-     */
+    if (closeBookButton && bookViewer) {
+        closeBookButton.addEventListener('click', () => {
+            bookViewer.classList.add('hidden'); // Use 'hidden' class for visibility
+            currentPage = 0; // Reset to first page when closing
+            updateBookView();
+        });
+    }
+
+    document.querySelectorAll('.view-3d-button').forEach(button => {
+        button.addEventListener('click', () => {
+            if (bookViewer) {
+                bookViewer.classList.remove('hidden'); // Show the book viewer
+                currentPage = 0; // Start from page 0 or based on data-attribute if available
+                updateBookView();
+            }
+        });
+    });
+
+    if (nextPageButton) {
+        nextPageButton.addEventListener('click', () => {
+            if (currentPage < pages.length - 1) {
+                currentPage++;
+                updateBookView();
+            }
+        });
+    }
+
+    if (prevPageButton) {
+        prevPageButton.addEventListener('click', () => {
+            if (currentPage > 0) {
+                currentPage--;
+                updateBookView();
+            }
+        });
+    }
+
+    // PDF Viewer Logic (from previous context)
+    const pdfViewerModal = document.getElementById('pdf-viewer-modal');
+    const closePdfViewerBtn = document.getElementById('close-pdf-viewer');
+    const pdfIframe = document.getElementById('pdf-iframe');
+
+    if (pdfViewerModal && closePdfViewerBtn && pdfIframe) {
+        document.querySelectorAll('.view-pdf-button').forEach(button => {
+            button.addEventListener('click', () => {
+                const pdfLink = button.querySelector('a').href;
+                pdfIframe.src = pdfLink;
+                pdfViewerModal.classList.add('active');
+            });
+        });
+
+        closePdfViewerBtn.addEventListener('click', () => {
+            pdfViewerModal.classList.remove('active');
+            pdfIframe.src = ''; // Clear iframe source
+        });
+    }
+
+    // Theme Toggle Logic (from previous context)
+    const themeToggle = document.getElementById('theme-toggle');
+    if (themeToggle) {
+        themeToggle.addEventListener('click', function () {
+            const body = document.body;
+            // Toggle the dark class on the body
+            body.classList.toggle('light');
+
+            // Change the icon based on the current theme
+            if (body.classList.contains('dark')) {
+                themeToggle.textContent = '☀️'; // Light mode icon
+                localStorage.setItem("theme", "dark");
+            } else {
+                themeToggle.textContent = '🌙'; // Dark mode icon
+                localStorage.setItem("theme", "light");
+            }
+        });
+
+        // Apply saved theme on load
+        const savedTheme = localStorage.getItem("theme");
+        if (savedTheme) {
+            if (savedTheme === 'dark') {
+                body.classList.add('dark');
+                themeToggle.textContent = '☀️';
+            } else {
+                body.classList.remove('dark');
+                themeToggle.textContent = '🌙';
+            }
+        } else {
+            // Default to light if no theme saved
+            body.classList.remove('dark');
+            themeToggle.textContent = '🌙';
+        }
+    }
+
+    // Countdown Logic (from previous context)
+    const daysElement = document.getElementById("days");
+    const hoursElement = document.getElementById("hours");
+    const minutesElement = document.getElementById("minutes");
+    const secondsElement = document.getElementById("seconds");
+    let targetCountdownDate;
+    let countdownInterval;
+
     function updateCountdown() {
         const now = new Date().getTime();
         const difference = targetCountdownDate - now;
 
-        // Calculate days, hours, minutes, and seconds
-        // Use Math.max(0, ...) to ensure numbers are never negative
         const days = Math.max(0, Math.floor(difference / (1000 * 60 * 60 * 24)));
         const hours = Math.max(0, Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
         const minutes = Math.max(0, Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)));
         const seconds = Math.max(0, Math.floor((difference % (1000 * 60)) / 1000));
 
-        // Update the display elements, ensuring two digits
-        if (elements.days) elements.days.textContent = days.toString().padStart(2, "0");
-        if (elements.hours) elements.hours.textContent = hours.toString().padStart(2, "0");
-        if (elements.minutes) elements.minutes.textContent = minutes.toString().padStart(2, "0");
-        if (elements.seconds) elements.seconds.textContent = seconds.toString().padStart(2, "0");
+        if (daysElement) daysElement.textContent = days.toString().padStart(2, "0");
+        if (hoursElement) hoursElement.textContent = hours.toString().padStart(2, "0");
+        if (minutesElement) minutesElement.textContent = minutes.toString().padStart(2, "0");
+        if (secondsElement) secondsElement.textContent = seconds.toString().padStart(2, "0");
 
-        // If the countdown is finished, clear the interval
         if (difference < 0) {
-            clearInterval(countdownInterval); // Use the named interval
-            if (elements.days) elements.days.textContent = '00';
-            if (elements.hours) elements.hours.textContent = '00';
-            if (elements.minutes) elements.minutes.textContent = '00';
-            if (elements.seconds) elements.seconds.textContent = '00';
-            // Optionally, display a message like "Countdown Ended!"
+            clearInterval(countdownInterval);
+            if (daysElement) daysElement.textContent = '00';
+            if (hoursElement) hoursElement.textContent = '00';
+            if (minutesElement) minutesElement.textContent = '00';
+            if (secondsElement) secondsElement.textContent = '00';
         }
     }
 
-    /**
-     * Handles the sidebar functionality.
-     */
-    function handleSidebar() {
-        // Hamburger click to open sidebar
-        if (elements.hamburger && elements.sidebar) {
-            elements.hamburger.addEventListener('click', () => {
-                elements.sidebar.classList.add('open');
-                const overlay = document.getElementById('overlay');
-                if (overlay) overlay.classList.add('active');
-            });
-        }
+    // Initialize countdown if elements exist
+    if (daysElement && hoursElement && minutesElement && secondsElement) {
+        targetCountdownDate = new Date();
+        targetCountdownDate.setDate(targetCountdownDate.getDate() + 32); // 32 days from now
+        updateCountdown();
+        countdownInterval = setInterval(updateCountdown, 1000);
+    }
 
-        // Close sidebar button click
-        if (elements.closeSidebar && elements.sidebar) {
-            elements.closeSidebar.addEventListener('click', () => {
-                elements.sidebar.classList.remove('open');
-                const overlay = document.getElementById('overlay');
-                if (overlay) overlay.classList.remove('active');
-            });
-        }
+    // Changing Words Logic (from previous context)
+    const changingWordsElements = document.querySelectorAll('.changing-word');
+    let currentWordIndex = 0;
+    const words = ["Creativity", "Innovation", "Learning", "Technology"]; // Define words here
 
-        // Close sidebar when a navigation link is clicked (both navbar and sidebar links)
-        elements.navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                if (elements.sidebar && elements.sidebar.classList.contains('open')) {
-                    elements.sidebar.classList.remove('open');
-                    const overlay = document.getElementById('overlay');
-                    if (overlay) overlay.classList.remove('active');
-                }
-            });
+    function handleChangingWord() {
+        if (changingWordsElements.length === 0) return;
+
+        changingWordsElements.forEach(element => {
+            element.classList.add('fade-out');
+            setTimeout(() => {
+                element.textContent = words[currentWordIndex];
+                element.classList.remove('fade-out');
+                element.classList.add('fade-in');
+            }, 500); // Using 500ms fadeDuration as previously defined
         });
-
-        // Close sidebar if overlay is clicked
-        const overlay = document.getElementById('overlay');
-        if (overlay) {
-            overlay.addEventListener('click', () => {
-                if (elements.sidebar && elements.sidebar.classList.contains('open')) {
-                    elements.sidebar.classList.remove('open');
-                    overlay.classList.remove('active');
-                }
-            });
-        }
+        currentWordIndex = (currentWordIndex + 1) % words.length;
     }
 
-    /**
-     * Handles the theme toggle functionality.
-     */
-    function handleThemeToggle() {
-        if (elements.themeToggle) {
-            elements.themeToggle.addEventListener("click", () => {
-                const currentTheme = elements.body.classList.contains('dark') ? 'light' : 'dark';
-                setTheme(currentTheme);
-            });
-        }
+    if (changingWordsElements.length > 0) {
+        setInterval(handleChangingWord, 2500); // Interval for changing words
+        handleChangingWord(); // Initial call
     }
-
-    /**
-     * Updates the 3D book view.
-     */
-    function updateBookView() {
-        if (!elements.pages || elements.pages.length === 0) return;
-
-        elements.pages.forEach((page, index) => {
-            if (index < currentPage) { // Pages that have been "turned"
-                page.style.transform = 'rotateY(-180deg)';
-                page.style.zIndex = elements.pages.length - index; // Ensure flipped pages go behind
-            } else { // Pages yet to be turned or current page
-                page.style.transform = 'rotateY(0deg)';
-                page.style.zIndex = elements.pages.length + (index === currentPage ? 1 : 0); // Current page on top
-            }
-        });
-
-        // Enable/disable navigation buttons
-        if (elements.prevPageButton) elements.prevPageButton.disabled = currentPage === 0;
-        if (elements.nextPageButton) elements.nextPageButton.disabled = currentPage >= elements.pages.length - 1;
-    }
-
-    /**
-     * Initializes 3D book viewer event listeners.
-     */
-    function initBookViewer() {
-        if (elements.bookViewer && elements.closeBookButton) {
-            // Open book viewer from gallery buttons (assuming data-start-page is used)
-            document.querySelectorAll('.view-3d-button').forEach(button => {
-                button.addEventListener('click', () => {
-                    const startPage = parseInt(button.dataset.startPage || '0', 10);
-                    currentPage = startPage;
-                    elements.bookViewer.classList.add('active'); // Use 'active' for visibility
-                    updateBookView();
-                });
-            });
-
-            elements.closeBookButton.addEventListener('click', () => {
-                elements.bookViewer.classList.remove('active');
-                currentPage = 0; // Reset to first page when closing
-                updateBookView();
-            });
-
-            if (elements.nextPageButton) {
-                elements.nextPageButton.addEventListener('click', () => {
-                    if (currentPage < elements.pages.length - 1) {
-                        currentPage++;
-                        updateBookView();
-                    }
-                });
-            }
-
-            if (elements.prevPageButton) {
-                elements.prevPageButton.addEventListener('click', () => {
-                    if (currentPage > 0) {
-                        currentPage--;
-                        updateBookView();
-                    }
-                });
-            }
-        }
-    }
-
-    /**
-     * Initializes PDF viewer event listeners.
-     */
-    function initPdfViewer() {
-        if (elements.pdfViewerModal && elements.closePdfViewerBtn && elements.pdfIframe) {
-            document.querySelectorAll('.view-pdf-button').forEach(button => {
-                button.addEventListener('click', () => {
-                    const pdfLink = button.querySelector('a').href; // Get href from the nested <a>
-                    elements.pdfIframe.src = pdfLink; // Set the PDF source
-                    elements.pdfViewerModal.classList.add('active'); // Show the modal
-                });
-            });
-
-            elements.closePdfViewerBtn.addEventListener('click', () => {
-                elements.pdfViewerModal.classList.remove('active'); // Hide the modal
-                elements.pdfIframe.src = ''; // Clear the iframe source to stop any loading
-            });
-        }
-    }
-
-    // --- Initialization ---
-
-    // Calculate target date for countdown: 32 days from now
-    targetCountdownDate = new Date();
-    targetCountdownDate.setDate(targetCountdownDate.getDate() + 32);
-
-    // Apply saved theme or default theme on load
-    const savedTheme = localStorage.getItem("theme");
-    setTheme(savedTheme || config.defaultTheme);
-
-    // --- Event Listeners and Initial Calls ---
-    handleThemeToggle();
-    handleSidebar();
-    
-    // Start changing word animation only if elements exist
-    if (elements.changingWords.length > 0) {
-        setInterval(handleChangingWord, 2500);
-        handleChangingWord(); // Initial call to display first word immediately
-    }
-
-    // Start countdown only if elements exist
-    if (elements.days && elements.hours && elements.minutes && elements.seconds) {
-        updateCountdown(); // Initial call to avoid delay
-        countdownInterval = setInterval(updateCountdown, 1000); // Store interval ID
-    }
-
-    initBookViewer(); // Initialize 3D book viewer
-    initPdfViewer(); // Initialize PDF viewer
 });
+    </script>
+</body>
+</html>
